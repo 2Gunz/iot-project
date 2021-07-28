@@ -19,15 +19,16 @@ router.get('/', function(req, res, next) {
     conn.connect((err) => {
 
         if (err) throw err;
-        const sql = "SELECT * FROM set_points";
+        sql = "SELECT * FROM set_points";
         var rows;
 
 
         conn.query(sql, (err, result) => {
             if (err) res.send("\r\n Failed\r\n");
-            rows = JSON.parse(JSON.stringify(result));
+
+            rows = JSON.parse(JSON.stringify(result[result.length - 1]));
             console.table(rows);
-            res.send(rows['temp1'] + " " + rows['temp2']);
+            res.send(rows["temp1"] + " " + rows["temp2"]);
         });
     });
 
