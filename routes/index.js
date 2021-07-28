@@ -26,7 +26,8 @@ router.get('/', function(req, res, next) {
         conn.query(sql, (err, result) => {
             if (err) res.send("\r\n Failed\r\n");
             rows = JSON.parse(JSON.stringify(result));
-            res.send("\r\n" + rows.body.temp1 + "\r\n");
+            console.table(rows);
+            res.send("hi");
         });
     });
 
