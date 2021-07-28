@@ -12,7 +12,17 @@ function connectDb() {
         database: "iot_project",
     });
     return conn;
+    /*  const pool = mysql.createPool({
+       host     : 'migo.cym4s4x6gfpj.us-east-2.rds.amazonaws.com',
+       user     : 'migo',
+       password : 'migomigo',
+       database : 'iot_project'
+     });
+
+     return pool; */
 }
+
+
 
 //Proxy actually updates db
 function updateTable(id, table, column, val) {
@@ -143,6 +153,7 @@ router.post('/action', (req, res, next) => {
 
 router.get('/time', (req, res, next) => {
     var today = new Date();
+    today.toLocaleString('en-US', { timeZone: 'America/Denver' });
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     //var timeObject = { "time": time };
