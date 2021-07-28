@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
             if (err) res.send("\r\n Failed\r\n");
             rows = JSON.parse(JSON.stringify(result));
             console.table(rows);
-            res.send("hi");
+            res.send(rows['temp1'] + " " + rows['temp2']);
         });
     });
 
