@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+const { route } = require('./users');
 
 //DB connection
 function connectDb() {
@@ -138,6 +139,15 @@ router.post('/action', (req, res, next) => {
         updateTable(id, table, column, val);
     }
 
+})
+
+router.get('/time', (req, res, next) => {
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    //var timeObject = { "time": time };
+    const json = JSON.stringify(time);
+    res.send(json);
 })
 
 module.exports = router;
