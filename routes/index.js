@@ -158,7 +158,7 @@ router.get('/time', (req, res, next) => {
     //today = today.toString();
   /*   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     today = today.toString();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    
 
 
     console.log("today:" + today);
@@ -168,9 +168,10 @@ router.get('/time', (req, res, next) => {
     /* today = today.toLocaleString(); 
     const json = JSON.stringify(today); */
     var today = new Date();
-    today.setHours(today.getHours() - 7);
+    today.setHours(today.getHours() - 6);
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-    const json = JSON.stringify(today);
+    const json = JSON.stringify(time);
     res.send(json);
 })
 
