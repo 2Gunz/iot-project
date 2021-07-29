@@ -56,7 +56,7 @@ router.get('/set-points', function(req, res, next) {
         conn.query(sql, (err, result) => {
             if (err) res.send("\r\n Failed\r\n");
 
-            rows = JSON.parse(JSON.stringify(result[result.length - 1]));
+            rows = JSON.parse(JSON.stringify(result));
             /* str = 
             rows[0]['temp1'] + "==" + rows[0]['temp2'] + "==" +rows[0]['time1'] + "##" +
             rows[1]['temp1'] + "==" + rows[1]['temp2'] + "==" +rows[1]['time1'] + "##" +
