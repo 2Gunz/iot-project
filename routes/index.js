@@ -57,12 +57,12 @@ router.get('/set-points', function(req, res, next) {
             if (err) res.send("\r\n Failed\r\n");
 
             rows = JSON.parse(JSON.stringify(result[result.length - 1]));
-            str = 
+            /* str = 
             rows[0]['temp1'] + "==" + rows[0]['temp2'] + "==" +rows[0]['time1'] + "##" +
             rows[1]['temp1'] + "==" + rows[1]['temp2'] + "==" +rows[1]['time1'] + "##" +
-            rows[2]['temp1'] + "==" + rows[2]['temp2'] + "==" +rows[2]['time1'];
-            
-            const json = JSON.stringify(str);
+            rows[2]['temp1'] + "==" + rows[2]['temp2'] + "==" +rows[2]['time1']; */
+
+            const json = JSON.stringify(rows);
             res.send(json);
             
             
