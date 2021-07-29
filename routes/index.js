@@ -155,10 +155,10 @@ router.get('/time', (req, res, next) => {
     var today = new Date();
     //today.toLocaleString('en-US', { timeZone: 'America/Denver', hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" });
     today = today.toString();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  /*   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     console.log("today:" + today);
-    console.log("time:" + time);
+    console.log("time:" + time); */
     //var timeObject = { "time": time };
     const json = JSON.stringify(time);
     res.send(json);
