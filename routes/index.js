@@ -153,7 +153,7 @@ router.post('/action', (req, res, next) => {
 
 router.get('/time', (req, res, next) => {
     var today = new Date();
-    today.toLocaleString('en-US', { timeZone: 'America/Denver' });
+    today.toLocaleString('en-US', { timeZone: 'America/Denver', hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" });
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     //var timeObject = { "time": time };
