@@ -160,7 +160,7 @@ router.get('/time', (req, res, next) => {
     console.log("today:" + today);
     console.log("time:" + time); */
     //var timeObject = { "time": time };
-    const json = JSON.stringify(time);
+    const json = JSON.stringify(today);
     res.send(json);
 })
 
