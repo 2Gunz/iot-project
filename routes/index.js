@@ -57,8 +57,15 @@ router.get('/set-points', function(req, res, next) {
             if (err) res.send("\r\n Failed\r\n");
 
             rows = JSON.parse(JSON.stringify(result[result.length - 1]));
-            console.table(rows);
-            res.send(rows);
+            str = 
+            rows[0]['temp1'] + "==" + rows[0]['temp2'] + "==" +rows[0]['time1'] + "##" +
+            rows[1]['temp1'] + "==" + rows[1]['temp2'] + "==" +rows[1]['time1'] + "##" +
+            rows[2]['temp1'] + "==" + rows[2]['temp2'] + "==" +rows[2]['time1'];
+            
+            const json = JSON.stringify(str);
+            res.send(json);
+            
+            
         });
     });
 
@@ -153,25 +160,12 @@ router.post('/action', (req, res, next) => {
 })
 
 router.get('/time', (req, res, next) => {
-    //
-    //today.toLocaleString('en-US', { timeZone: 'America/Denver', hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" });
-    //today = today.toString();
-  /*   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    today = today.toString();
-    
-
-
-    console.log("today:" + today);
-    console.log("time:" + time);
-    //var timeObject = { "time": time };
-
-    /* today = today.toLocaleString(); 
-    const json = JSON.stringify(today); */
+  
     var today = new Date();
     today.setHours(today.getHours() - 6);
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-    const json = JSON.stringify(time);
+    const json = JSON.stringify(today);
     res.send(json);
 })
 
