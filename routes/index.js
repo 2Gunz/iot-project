@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 const { route } = require('./users');
-var time = require('time');
+
 
 //DB connection
 function connectDb() {
@@ -153,22 +153,23 @@ router.post('/action', (req, res, next) => {
 })
 
 router.get('/time', (req, res, next) => {
-    //var today = new Date();
+    //
     //today.toLocaleString('en-US', { timeZone: 'America/Denver', hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" });
     //today = today.toString();
   /*   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    today = today.toString();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
 
     console.log("today:" + today);
-    console.log("time:" + time); */
+    console.log("time:" + time);
     //var timeObject = { "time": time };
 
     /* today = today.toLocaleString(); 
     const json = JSON.stringify(today); */
+    var today = new Date();
+    today.setHours(today.getHours() - 7);
 
-    var currentTime = new time.Date();
-    currentTime.setTimezone("America/Denver");
-    var time = currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
     const json = JSON.stringify(today);
     res.send(json);
 })
