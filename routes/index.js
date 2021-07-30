@@ -168,7 +168,7 @@ router.get("/time", (req, res, next) => {
   res.send(json);
 });
 
-router.post("/get-status", (req, res, next) => {
+router.get("/get-status/:temp", (req, res, next) => {
   var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
