@@ -6,21 +6,16 @@ const { route } = require('./users');
 
 //DB connection
 function connectDb() {
-    var conn = mysql.createConnection({
-        host: "migo.cym4s4x6gfpj.us-east-2.rds.amazonaws.com",
-        user: "migo",
-        password: "migomigo",
-        database: "iot_project",
-    });
-    return conn;
-    /*  const pool = mysql.createPool({
+    
+     const pool = mysql.createPool({
        host     : 'migo.cym4s4x6gfpj.us-east-2.rds.amazonaws.com',
        user     : 'migo',
        password : 'migomigo',
-       database : 'iot_project'
+       database : 'iot_project',
+       connectionLimit: 99
      });
 
-     return pool; */
+     return pool;
 }
 
 
@@ -29,11 +24,12 @@ function connectDb() {
 function updateTable(id, table, column, val) {
     var conn = connectDb();
 
-    conn.connect((err) => {
+    conn.getConnection((err, connection) => {
         if (err) throw err;
 
         const sql = "UPDATE " + table + " SET " + column + " = " + val + " WHERE id = " + id;
-        conn.query(sql, (err, result) => {
+        connection.query(sql, (err, result) => {
+            connection.release();
             if (err) res.send("\r\n Failed\r\n");
 
             res.send("Data updated :)");
@@ -47,13 +43,13 @@ function updateTable(id, table, column, val) {
 router.get('/set-points', function(req, res, next) {
     var conn = connectDb();
 
-    conn.connect((err) => {
+    conn.getConnection(((err, connection) => {
         if (err) throw err;
 
         const sql = "SELECT * FROM set_points";
         var rows;
 
-        conn.query(sql, (err, result) => {
+        connection.query(sql, (err, result) => {
             if (err) res.send("\r\n Failed\r\n");
 
             rows = JSON.parse(JSON.stringify(result));
@@ -61,7 +57,15 @@ router.get('/set-points', function(req, res, next) {
                 "id1":rows[0]['id'],
                 "time1":rows[0]['time1'],
                 "temp1":rows[0]['temp1'],
-                "temp2":rows[0]['temp2']
+                "temp2":rows[0]['temp2'],
+                "id2":rows[1]['id'],
+                "time2":rows[1]['time1'],
+                "temp3":rows[1]['temp1'],
+                "temp4":rows[1]['temp2'],
+                "id3":rows[2]['id'],
+                "time3":rows[2]['time1'],
+                "temp5":rows[2]['temp1'],
+                "temp6":rows[2]['temp2'],
             }
 
             const json = JSON.stringify(str);
@@ -69,7 +73,7 @@ router.get('/set-points', function(req, res, next) {
             
             
         });
-    });
+    }));
 
 
 });
@@ -127,19 +131,19 @@ router.post('/set-points', (req, res, next) => {
 router.get('/action', (req, res, next) => {
     var conn = connectDb();
 
-    conn.connect((err) => {
+    conn.getConnection(((err, connection) => {
         if (err) throw err;
 
         const sql = "SELECT * FROM action";
 
-        conn.query(sql, (err, result) => {
+        connection.query(sql, (err, result) => {
             if (err) res.send("\r\n Failed\r\n");
 
             var rows = JSON.parse(JSON.stringify(result[result.length - 1]));
             console.table(rows);
             res.send(rows);
         });
-    });
+    }));
 })
 
 //Update table: action
