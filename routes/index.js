@@ -182,6 +182,7 @@ router.get("/get-status/:temp", (req, res, next) => {
     timeObject["seconds"];
 
   var currentTemperature = req.params.temp;
+  console.log("Here");
   console.log(currentTemperature);
   currentTemperature = parseFloat(currentTemperature);
 
