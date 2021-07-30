@@ -182,9 +182,11 @@ router.post("/get-status", (req, res, next) => {
     timeObject["seconds"];
 
   var currentTemperature = req.params.temp;
+  console.log(currentTemperature);
   currentTemperature = parseFloat(currentTemperature);
 
-  
+
+
   //Time is between setpoint 1 and 2
   if (currentTime > setPoints[0]["time1"] && currentTime < setPoints[1]["time1"]) {
 
