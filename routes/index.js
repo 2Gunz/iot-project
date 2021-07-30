@@ -182,10 +182,11 @@ router.post("/get-status", (req, res, next) => {
     timeObject["seconds"];
 
   var currentTemperature = req.params.temp;
+  currentTemperature = parseFloat(currentTemperature);
 
+  
   //Time is between setpoint 1 and 2
   if (currentTime > setPoints[0]["time1"] && currentTime < setPoints[1]["time1"]) {
-    currentTemperature = parseFloat(currentTemperature);
 
     if (currentTemperature < setPoints[0]["temp1"]) {
         var status = {"status":"on", "dateTime":timeObject['date']}
@@ -195,8 +196,11 @@ router.post("/get-status", (req, res, next) => {
     } else {
         var status = {"status":"stay", "dateTime":timeObject['date']}
     }
+
   }//Time is between setpoint 2 and 3
   else if (currentTime > setPoints[1]["time1"] && currentTime < setPoints[2]["time1"]) {
+
+
     if (currentTemperature < setPoints[1]["temp1"]) {
         var status = {"status":"on", "dateTime":timeObject['date']}
         
@@ -208,6 +212,8 @@ router.post("/get-status", (req, res, next) => {
   
   }//Time is between setpoint 3 and 1
   else if (currentTime > setPoints[2]["time1"] || currentTime < setPoints[0]["time1"]) {
+
+
     if (currentTemperature < setPoints[2]["temp1"]) {
         var status = {"status":"on", "dateTime":timeObject['date']}
         
