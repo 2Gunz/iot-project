@@ -450,25 +450,23 @@ router.post("/", (req, res, next) => {
             message: "You left fields blank. All fields are required, try again...",
         });
     } else {
+        var myError = 0;
         time1 = time1.split(":");
         if (
             time1[0].length > 2 ||
             time1[0].length < 1 ||
             isNaN(parseInt(time1[0])) ||
             parseInt(time1[0]) > 24
-        )
-            res.render("index", {
-                message: "Bad time values. Try again...",
-            });
+        ) myError = 1;
+
         if (
             time1[1].length > 2 ||
             time1[1].length < 1 ||
             isNaN(parseInt(time1[1])) ||
             parseInt(time1[1]) > 59
-        )
-            res.render("index", {
-                message: "Bad time values. Try again...",
-            });
+        ) myError = 1;
+
+        time1 = time1[0] + time1[1] + "00";
 
         time2 = time2.split(":");
         if (
@@ -476,19 +474,13 @@ router.post("/", (req, res, next) => {
             time2[0].length < 1 ||
             isNaN(parseInt(time2[0])) ||
             parseInt(time2[0]) > 24
-        )
-            res.render("index", {
-                message: "Bad time values. Try again...",
-            });
+        ) myError = 1;
         if (
             time2[1].length > 2 ||
             time2[1].length < 1 ||
             isNaN(parseInt(time2[1])) ||
             parseInt(time2[1]) > 59
-        )
-            res.render("index", {
-                message: "Bad time values. Try again...",
-            });
+        ) myError = 1;
         time2 = time2[0] + time2[1] + "00";
 
         time3 = time3.split(":");
@@ -497,19 +489,13 @@ router.post("/", (req, res, next) => {
             time3[0].length < 1 ||
             isNaN(parseInt(time3[0])) ||
             parseInt(time3[0]) > 24
-        )
-            res.render("index", {
-                message: "Bad time values. Try again...",
-            });
+        ) myError = 1;
         if (
             time3[1].length > 2 ||
             time3[1].length < 1 ||
             isNaN(parseInt(time3[1])) ||
             parseInt(time3[1]) > 59
-        )
-            res.render("index", {
-                message: "Bad time values. Try again...",
-            });
+        ) myError = 1;
         time3 = time3[0] + time3[1] + "00";
 
         time1 = parseInt(time1);
@@ -528,7 +514,11 @@ router.post("/", (req, res, next) => {
             isNaN(parseFloat(temp6))
         ) {
             res.render("index", {
-                message: "You're inputting junk values...You know this is free software right???",
+                message: "You're inputting junk values...You know this is free software right??? ;)",
+            });
+        } else if (myError == 1) {
+            res.render("index", {
+                message: "Bad time values. Try again :[",
             });
         } else {
             if (parseFloat(temp1) < parseFloat(temp2))
