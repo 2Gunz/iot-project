@@ -521,7 +521,7 @@ router.post("/", (req, res, next) => {
                     spCount++;
                 });
             });
-            message = "Success! Your set points have been updated :)";
+            message = "Success! Your set points have been updated......Probably! :)";
         }
     }
     res.render("index", {
