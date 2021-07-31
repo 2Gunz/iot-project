@@ -356,19 +356,9 @@ router.post("/", (req,res,next) =>{
     var time1 = req.body.time1;
     var time2 = req.body.time2;
     var time3 = req.body.time3;
-
-    time1 = time1.split(":");
-    time1 = time1[0] + time1[1];
-
-    time2 = time2.split(":");
-    time2 = time2[0] + time2[1];
-
-    time3 = time3.split(":");
-    time3 = time3[0] + time3[1];
-
-    time1 = parseInt(time1);
-    time2 = parseInt(time2);
-    time3 = parseInt(time3);
+    time1.trim();
+    time2.trim();
+    time3.trim();
 
     var temp1 = req.body.temp1;
     var temp2 = req.body.temp2;
@@ -378,6 +368,33 @@ router.post("/", (req,res,next) =>{
 
     var temp5 = req.body.temp5;
     var temp6 = req.body.temp6;
+
+    temp1.trim();
+    temp2.trim();
+    temp3.trim();
+    temp4.trim();
+    temp5.trim();
+    temp6.trim();
+
+    if(time1.length > 5 || time2.length > 5 || time3.length > 5)
+    {
+        res.render("index", message = "You entered bad values, try again...")
+    }
+
+    time1 = time1.split(":");
+    time1 = time1[0] + time1[1] + "00";
+
+    time2 = time2.split(":");
+    time2 = time2[0] + time2[1] + "00";
+
+    time3 = time3.split(":");
+    time3 = time3[0] + time3[1] + "00";
+
+    time1 = parseInt(time1);
+    time2 = parseInt(time2);
+    time3 = parseInt(time3);
+
+    
 
     var sp1 = {"time": time1, "temp1": temp1, "temp2":temp2};
     var sp2 = {"time": time2, "temp1": temp3, "temp2":temp4};
