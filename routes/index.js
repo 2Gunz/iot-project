@@ -173,7 +173,7 @@ function updateTable(id, table, column, val) {
       if (err) throw err;
   
       const sql =
-        "UPDATE " + table + " SET " + column + " = " + val + " WHERE id = " + id;
+        "UPDATE " + table + " SET " + column + " = '" + val + "' WHERE id = " + id;
       connection.query(sql, (err, result) => {
         connection.release();
         if (err) throw err;
