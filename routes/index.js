@@ -10,8 +10,6 @@ const pool = mysql.createPool({
   database: "iot_project",
 });
 
-
-
 //Get table: set_points
 router.get("/set-points", function (req, res, next) {
   rows = getSetPoints();
@@ -91,8 +89,6 @@ router.get("/action", (req, res, next) => {
   });
 });
 
-
-
 //Update table: action
 router.post("/action", (req, res, next) => {
   var id = 1;
@@ -146,40 +142,43 @@ function getSetPoints() {
   });
 }
 
-function getAction()
-{
-    var rows;
-    pool.getConnection((err, connection) => {
-      if (err) throw err;
-  
-      const sql = "SELECT * FROM set_points";
-  
-      connection.query(sql, (err, result) => {
-        connection.release();
-        if (err) throw err;
-  
-        rows = JSON.parse(JSON.stringify(result));
-        return rows;
-      })
-    })
-}
+function getAction() {
+  var rows;
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
 
+    const sql = "SELECT * FROM set_points";
+
+    connection.query(sql, (err, result) => {
+      connection.release();
+      if (err) throw err;
+
+      rows = JSON.parse(JSON.stringify(result));
+      return rows;
+    });
+  });
+}
 
 //Proxy actually updates db
 function updateTable(id, table, column, val) {
-  
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
 
-    pool.getConnection((err, connection) => {
+    const sql =
+      "UPDATE " +
+      table +
+      " SET " +
+      column +
+      " = '" +
+      val +
+      "' WHERE id = " +
+      id;
+    connection.query(sql, (err, result) => {
+      connection.release();
       if (err) throw err;
-  
-      const sql =
-        "UPDATE " + table + " SET " + column + " = '" + val + "' WHERE id = " + id;
-      connection.query(sql, (err, result) => {
-        connection.release();
-        if (err) throw err;
-      });
     });
-  }
+  });
+}
 
 router.post("/get-status", (req, res, next) => {
   var rows;
@@ -204,27 +203,41 @@ router.post("/get-status", (req, res, next) => {
       var currentTemperature = req.body.temp;
 
       currentTemperature = parseFloat(currentTemperature);
-        var actionId = 1;
-        var actionTable = "action";
-        var actionCol = "status";
+      var actionId = 1;
+      var actionTable = "action";
+      var actionCol = "status";
       //Time is between setpoint 1 and 2
-      if (
-        currentTime > rows[0]["time1"] &&
-        currentTime < rows[1]["time1"]
-      ) {
+      if (currentTime > rows[0]["time1"] && currentTime < rows[1]["time1"]) {
         if (currentTemperature < rows[0]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
-            var val = "ON";
+          var val = "ON";
           updateTable(actionId, actionTable, actionCol, val);
-
         } else if (currentTemperature > rows[0]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
           var val = "OFF";
           updateTable(actionId, actionTable, actionCol, val);
         } else {
-            var rows = getAction();
-            var statVal = rows["status"];
-          var status = { status: statVal, dateTime: timeObject["date"] };
+          var results;
+
+
+          pool.getConnection((err, connection) => {
+            if (err) throw err;
+
+            const sql = "SELECT * FROM set_points";
+
+            connection.query(sql, (err, result) => {
+              connection.release();
+              if (err) throw err;
+
+              results = JSON.parse(JSON.stringify(result));
+              var statVal = results["status"];
+              var status = { status: statVal, dateTime: timeObject["date"] };
+              const json = JSON.stringify(status);
+              res.send(json);
+              
+            });
+          });
+         
         }
       } //Time is between setpoint 2 and 3
       else if (
