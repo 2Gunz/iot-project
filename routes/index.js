@@ -240,10 +240,8 @@ router.post("/get-status", (req, res, next) => {
 
         }  else {
 
-            var status = { "status": "", "dateTime": "" };
-              const json = JSON.stringify(status);
-              res.send(json);
-          /* var results;
+            
+          var results;
 
 
           pool.getConnection((err, connection) => {
@@ -257,13 +255,13 @@ router.post("/get-status", (req, res, next) => {
 
               results = JSON.parse(JSON.stringify(result));
               var statVal = results["status"];
-              var status = { status: statVal, dateTime: timeObject["date"] };
+              var status = { "status": statVal, "dateTime": timeObject["date"] };
               const json = JSON.stringify(status);
               res.send(json);
               
             });
           }); 
-         */
+        
         } 
       } //Time is between setpoint 2 and 3
       else if (
@@ -278,8 +276,7 @@ router.post("/get-status", (req, res, next) => {
         } else {
           var status = { status: "Gay", dateTime: timeObject["date"] };
         }
-        var status = { "status": "", "dateTime": "" };
-              const json = JSON.stringify(status);
+        const json = JSON.stringify(status);
               res.send(json);
       } //Time is between setpoint 3 and 1
       else if (
@@ -287,17 +284,19 @@ router.post("/get-status", (req, res, next) => {
         currentTime < rows[0]["time1"]
       ) {
 
-        var status = {"status":currentTime, "dateTime":rows[2]["time1"]}
-        /* var status = { "status": "", "dateTime": "" }; */
-              const json = JSON.stringify(status);
-              res.send(json);
-       /*  if (currentTemperature < rows[2]["temp1"]) {
+        
+        if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
           var status = { status: "Bay", dateTime: timeObject["date"] };
-        } */
+        }
+
+        
+              const json = JSON.stringify(status);
+              res.send(json);
+
       }
 
       
