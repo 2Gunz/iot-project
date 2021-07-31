@@ -194,18 +194,15 @@ router.post("/get-status", (req, res, next) => {
       rows = JSON.parse(JSON.stringify(result));
 
       var timeObject = getTime();
-      
+
       var strHrs = timeObject["hours"].toString();
-      if(strHrs.length == 1)
-        strHrs = "0" + strHrs;
+      if (strHrs.length == 1) strHrs = "0" + strHrs;
 
       var strMin = timeObject["minutes"].toString();
-      if(strMin.length == 1)
-          strMin = "0" + strMin;
+      if (strMin.length == 1) strMin = "0" + strMin;
 
       var strSec = timeObject["seconds"].toString();
-      if(strSec.length == 1)
-        strSec = "0" + strSec;
+      if (strSec.length == 1) strSec = "0" + strSec;
 
       var currentTime = strHrs + strMin + strSec;
       currentTime = parseInt(currentTime);
@@ -221,28 +218,32 @@ router.post("/get-status", (req, res, next) => {
 
 
         if (currentTemperature < rows[0]["temp1"]) {
-          var status = { "status": "ON", "dateTime": timeObject["date"] };
+
+
+          var status = { status: "ON", dateTime: timeObject["date"] };
           var val = "ON";
           updateTable(actionId, actionTable, actionCol, val);
-
-          const json = JSON.stringify(status);
-      res.send(json);
-
-        } else if (currentTemperature > rows[0]["temp2"]) {
-
-
-          var status = { "status": "OFF", "dateTime": timeObject["date"] };
-          var val = "OFF";
+          actionCol = "time";
+          val = timeObject["date"];
           updateTable(actionId, actionTable, actionCol, val);
 
           const json = JSON.stringify(status);
           res.send(json);
 
-        }  else {
 
-            
-          var results;
 
+        } else if (currentTemperature > rows[0]["temp2"]) {
+          var status = { status: "OFF", dateTime: timeObject["date"] };
+          var val = "OFF";
+          updateTable(actionId, actionTable, actionCol, val);
+          actionCol = "time";
+          val = timeObject["date"];
+          updateTable(actionId, actionTable, actionCol, val);
+
+          const json = JSON.stringify(status);
+          res.send(json);
+        } else {
+          
 
           pool.getConnection((err, connection) => {
             if (err) throw err;
@@ -253,16 +254,14 @@ router.post("/get-status", (req, res, next) => {
               connection.release();
               if (err) throw err;
 
-              results = JSON.parse(JSON.stringify(result));
-              var statVal = results["status"];
-              var status = { "status": statVal, "dateTime": timeObject["date"] };
+              var results = JSON.parse(JSON.stringify(result));
+              var statVal = results[0]["status"];
+              var status = { status: statVal, dateTime: timeObject["date"] };
               const json = JSON.stringify(status);
               res.send(json);
-              
             });
-          }); 
-        
-        } 
+          });
+        }
       } //Time is between setpoint 2 and 3
       else if (
         currentTime > rows[1]["time1"] &&
@@ -270,21 +269,18 @@ router.post("/get-status", (req, res, next) => {
       ) {
         if (currentTemperature < rows[1]["temp1"]) {
           var status = { status: "ShitON", dateTime: timeObject["date"] };
-          
         } else if (currentTemperature > rows[1]["temp2"]) {
           var status = { status: "ShitOFF", dateTime: timeObject["date"] };
         } else {
           var status = { status: "Gay", dateTime: timeObject["date"] };
         }
         const json = JSON.stringify(status);
-              res.send(json);
+        res.send(json);
       } //Time is between setpoint 3 and 1
       else if (
         currentTime > rows[2]["time1"] ||
         currentTime < rows[0]["time1"]
       ) {
-
-        
         if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
@@ -293,13 +289,9 @@ router.post("/get-status", (req, res, next) => {
           var status = { status: "Bay", dateTime: timeObject["date"] };
         }
 
-        
-              const json = JSON.stringify(status);
-              res.send(json);
-
+        const json = JSON.stringify(status);
+        res.send(json);
       }
-
-      
     });
   });
 
