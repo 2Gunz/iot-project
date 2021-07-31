@@ -3,16 +3,12 @@ var router = express.Router();
 var mysql = require("mysql");
 const { route } = require("./users");
 
-
-  const pool = mysql.createPool({
-    host: "migo.cym4s4x6gfpj.us-east-2.rds.amazonaws.com",
-    user: "migo",
-    password: "migomigo",
-    database: "iot_project",
-
-  });
-
-
+const pool = mysql.createPool({
+  host: "migo.cym4s4x6gfpj.us-east-2.rds.amazonaws.com",
+  user: "migo",
+  password: "migomigo",
+  database: "iot_project",
+});
 
 //Proxy actually updates db
 function updateTable(id, table, column, val) {
@@ -31,8 +27,6 @@ function updateTable(id, table, column, val) {
     });
   });
 }
-
-
 
 //Get table: set_points
 router.get("/set-points", function (req, res, next) {
@@ -149,111 +143,92 @@ router.get("/time", (req, res, next) => {
   res.send(json);
 });
 
-
-
 function getSetPoints() {
-  
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
 
-    pool.getConnection((err, connection) => {
-      if (err) throw err;
-  
-      const sql = "SELECT * FROM set_points";
-      var rows;
-  
-      connection.query(sql, (err, result) => {
-          connection.release();
-        if (err) res.send("\r\n Failed\r\n");
-  
-        rows = JSON.parse(JSON.stringify(result));
-        return rows;
-      });
+    const sql = "SELECT * FROM set_points";
+    var rows;
+
+    connection.query(sql, (err, result) => {
+      connection.release();
+      if (err) res.send("\r\n Failed\r\n");
+
+      rows = JSON.parse(JSON.stringify(result));
+      return rows;
     });
-  
-    
-  
-    
+  });
 }
 
-
-
-
 router.post("/get-status", (req, res, next) => {
+  var rows;
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
 
-    var rows;
-    pool.getConnection((err, connection) => {
-        if (err) throw err;
-    
-        const sql = "SELECT * FROM set_points";
-        
-    
-        connection.query(sql, (err, result) => {
-            connection.release();
-          if (err) throw err;
-    
-          rows = JSON.parse(JSON.stringify(result));
-          var timeObject = getTime();
-  var currentTime = timeObject["hours"].toString() + timeObject["minutes"].toString() + timeObject["seconds"].toString();
-  currentTime = parseInt(currentTime);
+    const sql = "SELECT * FROM set_points";
 
+    connection.query(sql, (err, result) => {
+      connection.release();
+      if (err) throw err;
 
-  const j = JSON.stringify({"status":currentTime, "dateTime": rows[0]["time1"]});
-  res.send(j);
-          
-        });
-      });
+      rows = JSON.parse(JSON.stringify(result));
+      
+      var timeObject = getTime();
+      var currentTime =
+        timeObject["hours"].toString() +
+        timeObject["minutes"].toString() +
+        timeObject["seconds"].toString();
+      currentTime = parseInt(currentTime);
+
+      var currentTemperature = req.body.temp;
+
+      currentTemperature = parseFloat(currentTemperature);
+
+      //Time is between setpoint 1 and 2
+      if (
+        currentTime > rows[0]["time1"] &&
+        currentTime < rows[1]["time1"]
+      ) {
+        if (currentTemperature < rows[0]["temp1"]) {
+          var status = { status: "on", dateTime: timeObject["date"] };
+        } else if (currentTemperature > rows[0]["temp2"]) {
+          var status = { status: "off", dateTime: timeObject["date"] };
+        } else {
+          var status = { status: "stay", dateTime: timeObject["date"] };
+        }
+      } //Time is between setpoint 2 and 3
+      else if (
+        currentTime > rows[1]["time1"] &&
+        currentTime < rows[2]["time1"]
+      ) {
+        if (currentTemperature < rows[1]["temp1"]) {
+          var status = { status: "on", dateTime: timeObject["date"] };
+        } else if (currentTemperature > rows[1]["temp2"]) {
+          var status = { status: "off", dateTime: timeObject["date"] };
+        } else {
+          var status = { status: "stay", dateTime: timeObject["date"] };
+        }
+      } //Time is between setpoint 3 and 1
+      else if (
+        currentTime > rows[2]["time1"] ||
+        currentTime < rows[0]["time1"]
+      ) {
+        if (currentTemperature < rows[2]["temp1"]) {
+          var status = { status: "on", dateTime: timeObject["date"] };
+        } else if (currentTemperature > rows[2]["temp2"]) {
+          var status = { status: "off", dateTime: timeObject["date"] };
+        } else {
+          var status = { status: "stay", dateTime: timeObject["date"] };
+        }
+      }
+
+      const json = JSON.stringify(status);
+      res.send(json);
+    });
+  });
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
-  
-  
-  /* var currentTemperature = req.body.temp;
-
-  currentTemperature = parseFloat(currentTemperature);
-
-
-
-  //Time is between setpoint 1 and 2
-  if (currentTime > setPoints[0]["time1"] && currentTime < setPoints[1]["time1"]) {
-
-    if (currentTemperature < setPoints[0]["temp1"]) {
-        var status = {"status":"on", "dateTime":timeObject['date']}
-        
-    } else if (currentTemperature > setPoints[0]["temp2"]) {
-        var status = {"status":"off", "dateTime":timeObject['date']}
-    } else {
-        var status = {"status":"stay", "dateTime":timeObject['date']}
-    }
-
-  }//Time is between setpoint 2 and 3
-  else if (currentTime > setPoints[1]["time1"] && currentTime < setPoints[2]["time1"]) {
-
-
-    if (currentTemperature < setPoints[1]["temp1"]) {
-        var status = {"status":"on", "dateTime":timeObject['date']}
-        
-    } else if (currentTemperature > setPoints[1]["temp2"]) {
-        var status = {"status":"off", "dateTime":timeObject['date']}
-    } else {
-        var status = {"status":"stay", "dateTime":timeObject['date']}
-    }
-  
-  }//Time is between setpoint 3 and 1
-  else if (currentTime > setPoints[2]["time1"] || currentTime < setPoints[0]["time1"]) {
-
-
-    if (currentTemperature < setPoints[2]["temp1"]) {
-        var status = {"status":"on", "dateTime":timeObject['date']}
-        
-    } else if (currentTemperature > setPoints[2]["temp2"]) {
-        var status = {"status":"off", "dateTime":timeObject['date']}
-    } else {
-        var status = {"status":"stay", "dateTime":timeObject['date']}
-    }
-
-  }
-
-  const json = JSON.stringify(status);
-  res.send(json); */
 });
 
 module.exports = router;
