@@ -45,13 +45,13 @@ function getSetPoints() {
         connection.release();
       if (err) res.send("\r\n Failed\r\n");
 
-      //rows = JSON.parse(JSON.stringify(result));
+      rows = JSON.parse(JSON.stringify(result));
     });
   });
 
   
 
-  return result;
+  return rows;
 }
 
 //Get table: set_points
