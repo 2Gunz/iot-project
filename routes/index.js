@@ -221,7 +221,7 @@ router.post("/get-status", (req, res, next) => {
 
 
         if (currentTemperature < rows[0]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"] };
+          var status = { "status": "ON", "dateTime": timeObject["date"] };
           var val = "ON";
           updateTable(actionId, actionTable, actionCol, val);
 
@@ -231,14 +231,18 @@ router.post("/get-status", (req, res, next) => {
         } else if (currentTemperature > rows[0]["temp2"]) {
 
 
-          var status = { status: "OFF", dateTime: timeObject["date"] };
+          var status = { "status": "OFF", "dateTime": timeObject["date"] };
           var val = "OFF";
           updateTable(actionId, actionTable, actionCol, val);
 
           const json = JSON.stringify(status);
           res.send(json);
 
-        } /* else {
+        }  else {
+
+            var status = { "status": "", "dateTime": "" };
+              const json = JSON.stringify(status);
+              res.send(json);
           /* var results;
 
 
@@ -259,21 +263,24 @@ router.post("/get-status", (req, res, next) => {
               
             });
           }); 
-         
-        } */
+         */
+        } 
       } //Time is between setpoint 2 and 3
       else if (
         currentTime > rows[1]["time1"] &&
         currentTime < rows[2]["time1"]
       ) {
         if (currentTemperature < rows[1]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"] };
+          var status = { status: "ShitON", dateTime: timeObject["date"] };
           
         } else if (currentTemperature > rows[1]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"] };
+          var status = { status: "ShitOFF", dateTime: timeObject["date"] };
         } else {
           var status = { status: "Gay", dateTime: timeObject["date"] };
         }
+        var status = { "status": "", "dateTime": "" };
+              const json = JSON.stringify(status);
+              res.send(json);
       } //Time is between setpoint 3 and 1
       else if (
         currentTime > rows[2]["time1"] ||
@@ -281,6 +288,9 @@ router.post("/get-status", (req, res, next) => {
       ) {
 
         var status = {"status":currentTime, "dateTime":rows[2]["time1"]}
+        var status = { "status": "", "dateTime": "" };
+              const json = JSON.stringify(status);
+              res.send(json);
        /*  if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
