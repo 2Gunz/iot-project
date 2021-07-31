@@ -239,14 +239,14 @@ router.post("/get-status", (req, res, next) => {
           pool.getConnection((err, connection) => {
             if (err) throw err;
 
-            const sql = "SELECT * FROM set_points WHERE id = 1";
+            const sql = "SELECT * FROM action WHERE id = 1";
 
             connection.query(sql, (err, result) => {
               connection.release();
               if (err) throw err;
 
               var results = JSON.parse(JSON.stringify(result));
-              var statVal = results[0]["status"];
+              var statVal = results["status"];
               var status = { status: statVal, dateTime: currentTime };
               const json = JSON.stringify(status);
               res.send(json);
@@ -258,13 +258,14 @@ router.post("/get-status", (req, res, next) => {
         currentTime > rows[1]["time1"] &&
         currentTime < rows[2]["time1"]
       ) {
-        if (currentTemperature < rows[1]["temp1"]) {
+        /* if (currentTemperature < rows[1]["temp1"]) {
           var status = { status: "ShitON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[1]["temp2"]) {
           var status = { status: "ShitOFF", dateTime: timeObject["date"] };
         } else {
           var status = { status: "Gay", dateTime: timeObject["date"] };
-        }
+        } */
+        var status = { status: "Gay", dateTime: timeObject["date"] }
         const json = JSON.stringify(status);
         res.send(json);
       } //Time is between setpoint 3 and 1
@@ -272,14 +273,15 @@ router.post("/get-status", (req, res, next) => {
         currentTime > rows[2]["time1"] ||
         currentTime < rows[0]["time1"]
       ) {
-        if (currentTemperature < rows[2]["temp1"]) {
+       /*  if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
           var status = { status: "Bay", dateTime: timeObject["date"] };
-        }
+        } */
 
+        var status = { status: "Bay", dateTime: timeObject["date"] }
         const json = JSON.stringify(status);
         res.send(json);
       }
