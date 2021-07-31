@@ -168,8 +168,10 @@ router.get("/time", (req, res, next) => {
   res.send(json);
 });
 
-router.get("/get-status/:temp", (req, res, next) => {
-  var setPoints = getSetPoints();
+router.get("/get-status", (req, res, next) => {
+    var json = JSON.stringify({"status":1, "dateTime":2});
+    res.send(json);
+  /* var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
@@ -229,7 +231,7 @@ router.get("/get-status/:temp", (req, res, next) => {
   }
 
   const json = JSON.stringify(status);
-  res.send(json);
+  res.send(json); */
 });
 
 module.exports = router;
