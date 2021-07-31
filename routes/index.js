@@ -12,9 +12,9 @@ const pool = mysql.createPool({
 
 //Proxy actually updates db
 function updateTable(id, table, column, val) {
-  var conn = connectDb();
+  
 
-  conn.getConnection((err, connection) => {
+  pool.getConnection((err, connection) => {
     if (err) throw err;
 
     const sql =
