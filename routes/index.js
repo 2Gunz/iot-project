@@ -188,7 +188,7 @@ router.post("/get-status", (req, res, next) => {
             connection.release();
           if (err) res.send("\r\n Failed\r\n");
     
-          rows = JSON.parse(JSON.stringify(result));
+          rows = JSON.parse(result);
           
         });
       });
