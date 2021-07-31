@@ -347,4 +347,9 @@ router.post("/get-status", (req, res, next) => {
 
 });
 
+
+router.get("/", (req,res,next) =>{
+    res.render("index");
+})
+
 module.exports = router;

@@ -1,5 +1,57 @@
-extends layout
+head
+  meta(charset='utf-8')
+  title Title2
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
 
-block content
-  h1= title
-  p Welcome to #{title}
+  body
+    .modal-dialog
+        .modal-content
+          // Modal Header
+          .modal-header
+            button.close(type="button", data-dismiss="modal")
+              span(aria-hidden="true") ×
+              span.sr-only Close
+            h4#myModalLabel.modal-title
+              | Enter set points and temperatures
+              h6#myModalLabel.modal-title
+              | Must be in 24-hour time. Ex: For 11:00pm enter 23:00
+          // Modal Body
+          .modal-body
+            //#editForm.form(role='form' method='GET' action='https://www.google.com/')
+            form(role='form' method='GET' action='https://www.google.com/')
+              div.form-group
+                label(for='time1') Set point 1:
+                input#name.form-control(type='text', placeholder='Enter 4 digit time (ex: 10:03)' name='time1')
+              div.form-group
+                label(for='temp1') Low temperature:
+                input#name.form-control(type='text', placeholder='Enter the low temperature' name='temp1')
+                div.form-group
+                label(for='temp2') High temperature:
+                input#name.form-control(type='text', placeholder='Enter the high temperature' name='temp2')
+
+              div.form-group
+                label(for='time2') Set point 2:
+                input#name.form-control(type='text', placeholder='Enter 4 digit time (ex: 10:03)' name='time2')
+              div.form-group
+                label(for='temp3') Low temperature:
+                input#name.form-control(type='text', placeholder='Enter the low temperature' name='temp3')
+                div.form-group
+                label(for='temp4') High temperature:
+                input#name.form-control(type='text', placeholder='Enter the high temperature' name='temp4')
+
+              div.form-group
+                label(for='time3') Set point 2:
+                input#name.form-control(type='text', placeholder='Enter 4 digit time (ex: 10:03)' name='time3')
+              div.form-group
+                label(for='temp5') Low temperature:
+                input#name.form-control(type='text', placeholder='Enter the low temperature' name='temp5')
+                div.form-group
+                label(for='temp6') High temperature:
+                input#name.form-control(type='text', placeholder='Enter the high temperature' name='temp6')
+              button.btn.btn-primary(type="submit", name="asdf") Submit
+              button.btn.btn-default(type="button", data-dismiss="modal")
+                | Close
+          // Modal Footer
+          .modal-footer
+          
+
