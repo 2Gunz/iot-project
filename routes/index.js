@@ -493,7 +493,7 @@ router.post("/", (req, res, next) => {
 
       var spArr = [sp1, sp2, sp3];
 
-      spArr.sort((a, b) => (a.time < b.time ? 1 : -1));
+      spArr.sort((a, b) => (a.time > b.time ? 1 : -1));
 
       var spCount = 1;
       spArr.map((object, index) => {
