@@ -170,7 +170,7 @@ router.get("/time", (req, res, next) => {
 });
 
 router.post("/get-status", (req, res, next) => {
-  //var setPoints = getSetPoints();
+  var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
@@ -179,10 +179,10 @@ router.post("/get-status", (req, res, next) => {
   currentTime = parseInt(currentTime);
 
 
-  const j = JSON.stringify({"status":currentTime, "dateTime": req.body.temp});
-  res.send(j);
+ /*  const j = JSON.stringify({"status":currentTime, "dateTime": req.body.temp});
+  res.send(j); */
   
-  /* var currentTemperature = req.body.temp;
+   var currentTemperature = req.body.temp;
 
   currentTemperature = parseFloat(currentTemperature);
 
@@ -229,7 +229,7 @@ router.post("/get-status", (req, res, next) => {
   }
 
   const json = JSON.stringify(status);
-  res.send(json); */
+  res.send(json); 
 });
 
 module.exports = router;
