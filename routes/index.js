@@ -177,8 +177,6 @@ function updateTable(id, table, column, val) {
       connection.query(sql, (err, result) => {
         connection.release();
         if (err) throw err;
-  
-        res.send("Data updated :)");
       });
     });
   }
