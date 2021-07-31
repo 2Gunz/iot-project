@@ -215,36 +215,27 @@ router.post("/get-status", (req, res, next) => {
       var actionCol = "status";
       //Time is between setpoint 1 and 2
       if (currentTime > rows[0]["time1"] && currentTime < rows[1]["time1"]) {
-
-
         if (currentTemperature < rows[0]["temp1"]) {
-
-
           var status = { status: "ON", dateTime: timeObject["date"] };
           var val = "ON";
           updateTable(actionId, actionTable, actionCol, val);
           actionCol = "time";
-          val = timeObject["date"];
+          val = currentTime;
           updateTable(actionId, actionTable, actionCol, val);
 
           const json = JSON.stringify(status);
           res.send(json);
-
-
-
         } else if (currentTemperature > rows[0]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
           var val = "OFF";
           updateTable(actionId, actionTable, actionCol, val);
           actionCol = "time";
-          val = timeObject["date"];
+          val = currentTime;
           updateTable(actionId, actionTable, actionCol, val);
 
           const json = JSON.stringify(status);
           res.send(json);
         } else {
-          
-
           pool.getConnection((err, connection) => {
             if (err) throw err;
 
@@ -256,7 +247,7 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"] };
+              var status = { status: statVal, dateTime: currentTime };
               const json = JSON.stringify(status);
               res.send(json);
             });
