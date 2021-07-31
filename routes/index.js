@@ -412,7 +412,7 @@ router.post("/", (req,res,next) =>{
         time2 = parseInt(time2);
         time3 = parseInt(time3);
 
-        if(isNaN(time1) || isNaN(time2) || isNan(time3) || isNaN(parseFloat(temp1)) || isNaN(parseFloat(temp2)) || isNaN(parseFloat(temp3))
+        if(isNaN(time1) || isNaN(time2) || isNaN(time3) || isNaN(parseFloat(temp1)) || isNaN(parseFloat(temp2)) || isNaN(parseFloat(temp3))
         || isNaN(parseFloat(temp4)) || isNaN(parseFloat(temp5)) || isNaN(parseFloat(temp6)))
         {
             res.render("index", {message: "You're inputting junk values...You know this is free software right???"})
