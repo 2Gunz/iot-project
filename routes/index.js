@@ -397,7 +397,7 @@ router.post("/get-status", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     res.render("index", {
-        message: "You must fill in ALL fields.  Use 24-hour time format. ",
+        mes: "You must fill in ALL fields.  Use 24-hour time format. ",
     });
 });
 
