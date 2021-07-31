@@ -245,7 +245,7 @@ router.post("/get-status", (req, res, next) => {
           pool.getConnection((err, connection) => {
             if (err) throw err;
 
-            const sql = "SELECT * FROM set_points";
+            const sql = "SELECT * FROM set_points WHERE id = 1";
 
             connection.query(sql, (err, result) => {
               connection.release();
