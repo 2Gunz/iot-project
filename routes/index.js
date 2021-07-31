@@ -357,13 +357,13 @@ router.post("/", (req,res,next) =>{
     var time2 = req.body.time2;
     var time3 = req.body.time3;
 
-    time1 = time.split(":");
+    time1 = time1.split(":");
     time1 = time1[0] + time1[1];
 
-    time2 = time.split(":");
+    time2 = time2.split(":");
     time2 = time2[0] + time2[1];
 
-    time3 = time.split(":");
+    time3 = time3.split(":");
     time3 = time3[0] + time3[1];
 
     time1 = parseInt(time1);
