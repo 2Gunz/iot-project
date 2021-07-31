@@ -526,7 +526,7 @@ router.post("/", (req, res, next) => {
         }
     }
     res.render("index", {
-        message: message
+        mes: message
     });
 });
 
