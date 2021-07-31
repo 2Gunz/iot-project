@@ -288,7 +288,7 @@ router.post("/get-status", (req, res, next) => {
       ) {
 
         var status = {"status":currentTime, "dateTime":rows[2]["time1"]}
-        var status = { "status": "", "dateTime": "" };
+        /* var status = { "status": "", "dateTime": "" }; */
               const json = JSON.stringify(status);
               res.send(json);
        /*  if (currentTemperature < rows[2]["temp1"]) {
