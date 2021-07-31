@@ -216,7 +216,7 @@ router.post("/get-status", (req, res, next) => {
       //Time is between setpoint 1 and 2
       if (currentTime > rows[0]["time1"] && currentTime < rows[1]["time1"]) {
         if (currentTemperature < rows[0]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"] };
+          var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[0]["temp1"],temp2: rows[0]["temp2"] };
           var val = "ON";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -227,7 +227,7 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[0]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"] };
+          var status = { status: "OFF", dateTime: timeObject["date"], temp1: rows[0]["temp1"],temp2: rows[0]["temp2"]};
           var val = "OFF";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -249,7 +249,7 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"] };
+              var status = { status: statVal, dateTime: timeObject["date"], temp1: rows[0]["temp1"],temp2: rows[0]["temp2"] };
               const json = JSON.stringify(status);
               res.send(json);
             });
@@ -261,7 +261,7 @@ router.post("/get-status", (req, res, next) => {
         currentTime < rows[2]["time1"]
       ) {
         if (currentTemperature < rows[1]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"] };
+          var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"] };
           var val = "ON";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -272,7 +272,7 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[1]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"] };
+          var status = { status: "OFF", dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"]  };
           var val = "OFF";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -294,7 +294,7 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"] };
+              var status = { status: statVal, dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"]  };
               const json = JSON.stringify(status);
               res.send(json);
             });
@@ -308,7 +308,7 @@ router.post("/get-status", (req, res, next) => {
         currentTime < rows[0]["time1"]
       ) {
         if (currentTemperature < rows[2]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"] };
+          var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]  };
           var val = "ON";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -319,7 +319,7 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[2]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"] };
+          var status = { status: "OFF", dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]   };
           var val = "OFF";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -341,7 +341,7 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"] };
+              var status = { status: statVal, dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]   };
               const json = JSON.stringify(status);
               res.send(json);
             });
