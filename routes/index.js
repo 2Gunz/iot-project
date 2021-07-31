@@ -179,6 +179,8 @@ router.post("/get-status", (req, res, next) => {
   currentTime = parseInt(currentTime);
 
 
+  const j = JSON.stringify({"status":currentTime, "dateTime": setPoints[0]["time1"]});
+  res.send(j);
   
   var currentTemperature = req.body.temp;
 
