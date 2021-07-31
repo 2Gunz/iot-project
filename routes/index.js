@@ -220,6 +220,13 @@ router.post("/get-status", (req, res, next) => {
 
           var status = { status: "ON", dateTime: timeObject["date"] };
           var val = "ON";
+
+          updateTable(actionId, actionTable, actionCol, val);
+      actionCol = "time";
+      val = currentTime;
+      updateTable(actionId, actionTable, actionCol, val);
+
+
           const json = JSON.stringify(status);
           res.send(json);
 
@@ -229,6 +236,12 @@ router.post("/get-status", (req, res, next) => {
 
           var status = { status: "OFF", dateTime: timeObject["date"] };
           var val = "OFF";
+
+          updateTable(actionId, actionTable, actionCol, val);
+          actionCol = "time";
+          val = currentTime;
+          updateTable(actionId, actionTable, actionCol, val);
+
           const json = JSON.stringify(status);
           res.send(json);
 
@@ -260,11 +273,25 @@ router.post("/get-status", (req, res, next) => {
         if (currentTemperature < rows[1]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
           var val = "ON";
+
+
+          updateTable(actionId, actionTable, actionCol, val);
+      actionCol = "time";
+      val = currentTime;
+      updateTable(actionId, actionTable, actionCol, val);
+
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[1]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
           var val = "OFF";
+
+          updateTable(actionId, actionTable, actionCol, val);
+      actionCol = "time";
+      val = currentTime;
+      updateTable(actionId, actionTable, actionCol, val);
+
+
           const json = JSON.stringify(status);
           res.send(json);
         } else {
@@ -297,11 +324,25 @@ router.post("/get-status", (req, res, next) => {
         if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
           var val = "ON";
+
+          updateTable(actionId, actionTable, actionCol, val);
+      actionCol = "time";
+      val = currentTime;
+      updateTable(actionId, actionTable, actionCol, val);
+
+
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[2]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
           var val = "OFF";
+
+          updateTable(actionId, actionTable, actionCol, val);
+      actionCol = "time";
+      val = currentTime;
+      updateTable(actionId, actionTable, actionCol, val);
+
+
           const json = JSON.stringify(status);
           res.send(json);
         } else {
@@ -324,14 +365,10 @@ router.post("/get-status", (req, res, next) => {
         }
 
        
-        const json = JSON.stringify(status);
-        res.send(json);
+        
       }
 
-      updateTable(actionId, actionTable, actionCol, val);
-      actionCol = "time";
-      val = currentTime;
-      updateTable(actionId, actionTable, actionCol, val);
+      
     });
   });
 
