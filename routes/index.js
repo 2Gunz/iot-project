@@ -10,23 +10,7 @@ const pool = mysql.createPool({
   database: "iot_project",
 });
 
-//Proxy actually updates db
-function updateTable(id, table, column, val) {
-  
 
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-
-    const sql =
-      "UPDATE " + table + " SET " + column + " = " + val + " WHERE id = " + id;
-    connection.query(sql, (err, result) => {
-      connection.release();
-      if (err) throw err;
-
-      res.send("Data updated :)");
-    });
-  });
-}
 
 //Get table: set_points
 router.get("/set-points", function (req, res, next) {
@@ -180,6 +164,25 @@ function getAction()
     })
 }
 
+
+//Proxy actually updates db
+function updateTable(id, table, column, val) {
+  
+
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+  
+      const sql =
+        "UPDATE " + table + " SET " + column + " = " + val + " WHERE id = " + id;
+      connection.query(sql, (err, result) => {
+        connection.release();
+        if (err) throw err;
+  
+        res.send("Data updated :)");
+      });
+    });
+  }
+
 router.post("/get-status", (req, res, next) => {
   var rows;
   pool.getConnection((err, connection) => {
@@ -218,7 +221,7 @@ router.post("/get-status", (req, res, next) => {
 
         } else if (currentTemperature > rows[0]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
-          var val = "OFF";
+          var val = "YO";
           updateTable(actionId, actionTable, actionCol, val);
         } else {
             var rows = getAction();
