@@ -182,7 +182,7 @@ router.post("/get-status", (req, res, next) => {
   const j = JSON.stringify({"status":currentTime, "dateTime": setPoints[0]["time1"]});
   res.send(j);
   
-  var currentTemperature = req.body.temp;
+  /* var currentTemperature = req.body.temp;
 
   currentTemperature = parseFloat(currentTemperature);
 
@@ -229,7 +229,7 @@ router.post("/get-status", (req, res, next) => {
   }
 
   const json = JSON.stringify(status);
-  res.send(json);
+  res.send(json); */
 });
 
 module.exports = router;
