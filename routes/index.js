@@ -256,10 +256,7 @@ router.post("/get-status", (req, res, next) => {
           });
         }
       } //Time is between setpoint 2 and 3
-      else if (
-        currentTime > rows[1]["time1"] &&
-        currentTime < rows[2]["time1"]
-      ) {
+      else if (currentTime > rows[1]["time1"] && currentTime < rows[2]["time1"]) {
         if (currentTemperature < rows[1]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"] };
           var val = "ON";
@@ -303,10 +300,7 @@ router.post("/get-status", (req, res, next) => {
 
    
       } //Time is between setpoint 3 and 1
-      else if (
-        currentTime > rows[2]["time1"] ||
-        currentTime < rows[0]["time1"]
-      ) {
+      else if (currentTime > rows[2]["time1"] || currentTime < rows[0]["time1"]) {
         if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]  };
           var val = "ON";
@@ -351,8 +345,6 @@ router.post("/get-status", (req, res, next) => {
     });
   });
 
-  //Times should already be sorted on the way into db
-  //So now just compare time from POST to times in db
 });
 
 module.exports = router;
