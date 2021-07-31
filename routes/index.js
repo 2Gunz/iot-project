@@ -238,8 +238,8 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
 
-        } else {
-          var results;
+        } /* else {
+          /* var results;
 
 
           pool.getConnection((err, connection) => {
@@ -258,9 +258,9 @@ router.post("/get-status", (req, res, next) => {
               res.send(json);
               
             });
-          });
+          }); 
          
-        }
+        } */
       } //Time is between setpoint 2 and 3
       else if (
         currentTime > rows[1]["time1"] &&
