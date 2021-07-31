@@ -397,7 +397,7 @@ router.post("/get-status", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   res.render("index", {
-    message: "You must fill in ALL fields.  Use 24-hour time format. "
+    message: "You must fill in ALL fields.  Use 24-hour time format. ",
   });
 });
 
@@ -453,29 +453,63 @@ router.post("/", (req, res, next) => {
     });
   } else {
     time1 = time1.split(":");
-    if (time1[0].length > 2 || time1[0].length < 1) 
-    res.render("index", {
+    if (
+      time1[0].length > 2 ||
+      time1[0].length < 1 ||
+      isNaN(parseInt(time1[0])) ||
+      parseInt(time1[0]) > 24
+    )
+      res.render("index", {
         message: "Bad time values. Try again...",
       });
-    if (time1[1].length > 2 || time1[1].length < 1) 
-    res.render("index", {
+    if (
+      time1[1].length > 2 ||
+      time1[1].length < 1 ||
+      isNaN(parseInt(time1[1])) ||
+      parseInt(time1[1]) > 59
+    )
+      res.render("index", {
         message: "Bad time values. Try again...",
       });
 
     time2 = time2.split(":");
-    if (time2[0].length > 2 || time2[0].length < 1)res.render("index", {
+    if (
+      time2[0].length > 2 ||
+      time2[0].length < 1 ||
+      isNaN(parseInt(time2[0])) ||
+      parseInt(time2[0]) > 24
+    )
+      res.render("index", {
         message: "Bad time values. Try again...",
       });
-    if (time2[1].length > 2 || time2[1].length < 1)res.render("index", {
+    if (
+      time2[1].length > 2 ||
+      time2[1].length < 1 ||
+      isNaN(parseInt(time2[1])) ||
+      parseInt(time2[1]) > 59
+    )
+      res.render("index", {
         message: "Bad time values. Try again...",
       });
     time2 = time2[0] + time2[1] + "00";
 
     time3 = time3.split(":");
-    if (time3[0].length > 2 || time3[0].length < 1) res.render("index", {
+    if (
+      time3[0].length > 2 ||
+      time3[0].length < 1 ||
+      isNaN(parseInt(time3[0])) ||
+      parseInt(time3[0]) > 24
+    )
+      res.render("index", {
         message: "Bad time values. Try again...",
       });
-    if (time3[1].length > 2 || time4[1].length < 1) res.render("index", {
+    if (
+      time3[1].length > 2 ||
+      time4[1].length < 1 ||
+      isNaN(parseInt(time3[1])) ||
+      parseInt(time3[1]) > 59
+    )
+      res.render("index", {
         message: "Bad time values. Try again...",
       });
     time3 = time3[0] + time3[1] + "00";
@@ -500,10 +534,18 @@ router.post("/", (req, res, next) => {
           "You're inputting junk values...You know this is free software right???",
       });
     } else {
-      var sp1 = { time: time1, temp1: temp1, temp2: temp2 };
-      var sp2 = { time: time2, temp1: temp3, temp2: temp4 };
-      var sp3 = { time: time3, temp1: temp5, temp2: temp6 };
+      if (parseFloat(temp1) < parseFloat(temp2))
+        var sp1 = { time: time1, temp1: temp1, temp2: temp2 };
+      else var sp1 = { time: time1, temp1: temp2, temp2: temp1 };
 
+      if (parseFloat(temp3) < parseFloat(temp4))
+        var sp2 = { time: time2, temp1: temp3, temp2: temp4 };
+      else var sp2 = { time: time2, temp1: temp4, temp2: temp3 };
+
+      if (parseFloat(temp5) < parseFloat(temp6))
+        var sp3 = { time: time3, temp1: temp5, temp2: temp6 };
+      else var sp3 = { time: time3, temp1: temp6, temp2: temp5 };
+      
       var spArr = [sp1, sp2, sp3];
 
       spArr.sort((a, b) => (a.time > b.time ? 1 : -1));
