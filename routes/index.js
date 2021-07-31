@@ -188,7 +188,7 @@ router.post("/get-status", (req, res, next) => {
     
         connection.query(sql, (err, result) => {
             connection.release();
-          if (err) res.send("\r\n Failed\r\n");
+          if (err) throw err;
     
           rows = JSON.parse(JSON.stringify(result));
           
