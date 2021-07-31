@@ -438,7 +438,7 @@ router.post("/", (req,res,next) =>{
                   connection.release();
                   if (err) throw err;
                     
-                  res.render("index");
+                  res.render("index", {message: "Success! Your set points have been updated :)"});
                 });
                 spCount++;
               });
