@@ -378,7 +378,7 @@ router.post("/", (req,res,next) =>{
 
     if(time1.length > 5 || time2.length > 5 || time3.length > 5)
     {
-        res.render("index", message = "You entered bad values, try again...")
+        res.render("index", {message: "You entered bad values, try again..."})
     }
 
     time1 = time1.split(":");
