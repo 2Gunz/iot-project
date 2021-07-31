@@ -178,7 +178,20 @@ function getSetPoints() {
 
 
 router.post("/get-status", (req, res, next) => {
-  var setPoints = getSetPoints();
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+    
+        const sql = "SELECT * FROM set_points";
+        var rows;
+    
+        connection.query(sql, (err, result) => {
+            connection.release();
+          if (err) res.send("\r\n Failed\r\n");
+    
+          rows = JSON.parse(JSON.stringify(result));
+          
+        });
+      });
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
@@ -187,7 +200,7 @@ router.post("/get-status", (req, res, next) => {
   currentTime = parseInt(currentTime);
 
 
-  const j = JSON.stringify({"status":currentTime, "dateTime": setPoints});
+  const j = JSON.stringify({"status":currentTime, "dateTime": rows[0]["time1"]});
   res.send(j);
   
   /* var currentTemperature = req.body.temp;
