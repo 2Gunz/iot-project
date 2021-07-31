@@ -50,6 +50,8 @@ function getSetPoints() {
     });
   });
 
+  console.table(rows);
+
   return rows;
 }
 
