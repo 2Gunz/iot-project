@@ -247,7 +247,7 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: currentTime };
+              var status = { status: statVal, dateTime: timeObject['date'] };
               const json = JSON.stringify(status);
               res.send(json);
             });
