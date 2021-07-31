@@ -32,27 +32,7 @@ function updateTable(id, table, column, val) {
   });
 }
 
-function getSetPoints() {
-  
 
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-
-    const sql = "SELECT * FROM set_points";
-    var rows;
-
-    connection.query(sql, (err, result) => {
-        connection.release();
-      if (err) res.send("\r\n Failed\r\n");
-
-      rows = JSON.parse(JSON.stringify(result));
-    });
-  });
-
-  
-
-  return rows;
-}
 
 //Get table: set_points
 router.get("/set-points", function (req, res, next) {
@@ -169,8 +149,36 @@ router.get("/time", (req, res, next) => {
   res.send(json);
 });
 
+
+
+function getSetPoints() {
+  
+
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+  
+      const sql = "SELECT * FROM set_points";
+      var rows;
+  
+      connection.query(sql, (err, result) => {
+          connection.release();
+        if (err) res.send("\r\n Failed\r\n");
+  
+        rows = JSON.parse(JSON.stringify(result));
+        return rows;
+      });
+    });
+  
+    
+  
+    
+}
+
+
+
+
 router.post("/get-status", (req, res, next) => {
-  //var setPoints = getSetPoints();
+  var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
@@ -179,7 +187,7 @@ router.post("/get-status", (req, res, next) => {
   currentTime = parseInt(currentTime);
 
 
-  const j = JSON.stringify({"status":currentTime, "dateTime": 123});
+  const j = JSON.stringify({"status":currentTime, "dateTime": setPoints[0]["time1"]});
   res.send(j);
   
   /* var currentTemperature = req.body.temp;
