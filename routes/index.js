@@ -169,10 +169,7 @@ router.get("/time", (req, res, next) => {
 });
 
 router.get("/get-status/:temp", (req, res, next) => {
-    var currentTemperature = req.params.temp;
-    const json = JSON.stringify({"status":currentTemperature, "dateTime": 0});
-  res.send(json);
-  /* var setPoints = getSetPoints();
+  var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
@@ -232,7 +229,7 @@ router.get("/get-status/:temp", (req, res, next) => {
   }
 
   const json = JSON.stringify(status);
-  res.send(json); */
+  res.send(json);
 });
 
 module.exports = router;
