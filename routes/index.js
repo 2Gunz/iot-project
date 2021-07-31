@@ -301,8 +301,7 @@ router.post("/get-status", (req, res, next) => {
           });
         }
 
-        const json = JSON.stringify(status);
-        res.send(json);
+   
       } //Time is between setpoint 3 and 1
       else if (
         currentTime > rows[2]["time1"] ||
