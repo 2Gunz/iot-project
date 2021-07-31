@@ -168,9 +168,10 @@ router.get("/time", (req, res, next) => {
   res.send(json);
 });
 
-router.get("/get-status", (req, res, next) => {
-    var json = JSON.stringify({"status":1, "dateTime":2});
-    res.send(json);
+router.get("/get-status/:temp", (req, res, next) => {
+    var currentTemperature = req.params.temp;
+    const json = JSON.stringify(currentTemperature);
+  res.send(json);
   /* var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
