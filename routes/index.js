@@ -3,8 +3,7 @@ var router = express.Router();
 var mysql = require("mysql");
 const { route } = require("./users");
 
-//DB connection
-function connectDb() {
+
   const pool = mysql.createPool({
     host: "migo.cym4s4x6gfpj.us-east-2.rds.amazonaws.com",
     user: "migo",
@@ -13,8 +12,7 @@ function connectDb() {
 
   });
 
-  return pool;
-}
+
 
 //Proxy actually updates db
 function updateTable(id, table, column, val) {
@@ -35,9 +33,9 @@ function updateTable(id, table, column, val) {
 }
 
 function getSetPoints() {
-  var conn = connectDb();
+  
 
-  conn.getConnection((err, connection) => {
+  pool.getConnection((err, connection) => {
     if (err) throw err;
 
     const sql = "SELECT * FROM set_points";
@@ -46,13 +44,13 @@ function getSetPoints() {
     connection.query(sql, (err, result) => {
       if (err) res.send("\r\n Failed\r\n");
 
-      rows = JSON.parse(JSON.stringify(result));
+      //rows = JSON.parse(JSON.stringify(result));
     });
   });
 
-  console.table(rows);
+  
 
-  return rows;
+  return result;
 }
 
 //Get table: set_points
@@ -183,6 +181,7 @@ router.post("/get-status", (req, res, next) => {
     "" +
     timeObject["seconds"];
 
+  
   var currentTemperature = req.body.temp;
 
   currentTemperature = parseFloat(currentTemperature);
