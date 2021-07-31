@@ -178,17 +178,19 @@ function getSetPoints() {
 
 
 router.post("/get-status", (req, res, next) => {
+
+    var rows;
     pool.getConnection((err, connection) => {
         if (err) throw err;
     
         const sql = "SELECT * FROM set_points";
-        var rows;
+        
     
         connection.query(sql, (err, result) => {
             connection.release();
           if (err) res.send("\r\n Failed\r\n");
     
-          rows = JSON.parse(result);
+          rows = JSON.parse(JSON.stringify(result));
           
         });
       });
