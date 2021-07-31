@@ -10,7 +10,7 @@ function connectDb() {
     user: "migo",
     password: "migomigo",
     database: "iot_project",
-    connectionLimit: 99,
+
   });
 
   return pool;
