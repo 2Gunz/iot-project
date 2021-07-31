@@ -402,6 +402,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+    var message;
     var time1 = req.body.time1;
     var time2 = req.body.time2;
     var time3 = req.body.time3;
@@ -426,13 +427,13 @@ router.post("/", (req, res, next) => {
     temp6.trim();
 
     if (time1.length > 5 || time2.length > 5 || time3.length > 5 || time1.length < 4 || time2.length < 4 || time3.length < 4) {
-        res.render("index", {
-            message: "You entered bad time values. Time values must be at least 4 characters or a maximum of 5. Examples -- 4-char: 01:00, 5-char: 14:00",
-        });
+
+        message = "You entered bad time values. Time values must be at least 4 characters or a maximum of 5. Examples -- 4-char: 01:00, 5-char: 14:00"
+
     } else if (!temp1 || !temp2 || !temp3 || !temp4 || !temp5 || !temp6 || !time1 || !time2 || !time3) {
-        res.render("index", {
-            message: "You left fields blank. All fields are required, try again...",
-        });
+
+        message = "You left fields blank. All fields are required, try again..."
+
     } else {
         var myError = 0;
         time1 = time1.split(":");
@@ -471,13 +472,13 @@ router.post("/", (req, res, next) => {
         time3 = parseInt(time3);
 
         if (isNaN(time1) || isNaN(time2) || isNaN(time3) || isNaN(parseFloat(temp1)) || isNaN(parseFloat(temp2)) || isNaN(parseFloat(temp3)) || isNaN(parseFloat(temp4)) || isNaN(parseFloat(temp5)) || isNaN(parseFloat(temp6))) {
-            res.render("index", {
-                message: "You're inputting junk values...You know this is free software right??? ;)",
-            });
+
+            message = "You're inputting junk values...You know this is free software right??? ;)"
+
         } else if (myError == 1) {
-            res.render("index", {
-                message: "Bad time values. Try again :[",
-            });
+
+            message = "Bad time values. Try again :["
+
         } else {
 
             if (parseFloat(temp1) < parseFloat(temp2))
@@ -513,17 +514,20 @@ router.post("/", (req, res, next) => {
 
                     connection.query(sql, (err, result) => {
                         connection.release();
-                        /* if (err) throw err; */
+                        if (err) throw err;
 
-                        res.render("index", {
-                            message: "Success! Your set points have been updated :)",
-                        });
+
+                        message = "Success! Your set points have been updated :)"
+
                     });
                     spCount++;
                 });
             });
         }
     }
+    res.render("index", {
+        message: message
+    });
 });
 
 module.exports = router;
