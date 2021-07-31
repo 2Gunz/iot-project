@@ -453,18 +453,31 @@ router.post("/", (req, res, next) => {
     });
   } else {
     time1 = time1.split(":");
-    if (time1[0].length > 2) time1[0].substring(0, 2);
-    if (time1[1].length > 2) time1[1].substring(0, 2);
-    time1 = time1[0] + time1[1] + "00";
+    if (time1[0].length > 2 || time1[0].length < 1) 
+    res.render("index", {
+        message: "Bad time values. Try again...",
+      });
+    if (time1[1].length > 2 || time1[1].length < 1) 
+    res.render("index", {
+        message: "Bad time values. Try again...",
+      });
 
     time2 = time2.split(":");
-    if (time2[0].length > 2) time2[0].substring(0, 2);
-    if (time2[1].length > 2) time2[1].substring(0, 2);
+    if (time2[0].length > 2 || time2[0].length < 1)res.render("index", {
+        message: "Bad time values. Try again...",
+      });
+    if (time2[1].length > 2 || time2[1].length < 1)res.render("index", {
+        message: "Bad time values. Try again...",
+      });
     time2 = time2[0] + time2[1] + "00";
 
     time3 = time3.split(":");
-    if (time3[0].length > 2) time3[0].substring(0, 2);
-    if (time3[1].length > 2) time3[1].substring(0, 2);
+    if (time3[0].length > 2 || time3[0].length < 1) res.render("index", {
+        message: "Bad time values. Try again...",
+      });
+    if (time3[1].length > 2 || time4[1].length < 1) res.render("index", {
+        message: "Bad time values. Try again...",
+      });
     time3 = time3[0] + time3[1] + "00";
 
     time1 = parseInt(time1);
