@@ -172,7 +172,7 @@ router.post("/get-status", (req, res, next) => {
       if (err) throw err;
 
       rows = JSON.parse(JSON.stringify(result));
-      
+
       var timeObject = getTime();
       var currentTime =
         timeObject["hours"].toString() +
@@ -190,11 +190,11 @@ router.post("/get-status", (req, res, next) => {
         currentTime < rows[1]["time1"]
       ) {
         if (currentTemperature < rows[0]["temp1"]) {
-          var status = { status: "on", dateTime: timeObject["date"] };
+          var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[0]["temp2"]) {
-          var status = { status: "off", dateTime: timeObject["date"] };
+          var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
-          var status = { status: "stay", dateTime: timeObject["date"] };
+          var status = { status: "STAY", dateTime: timeObject["date"] };
         }
       } //Time is between setpoint 2 and 3
       else if (
@@ -202,11 +202,11 @@ router.post("/get-status", (req, res, next) => {
         currentTime < rows[2]["time1"]
       ) {
         if (currentTemperature < rows[1]["temp1"]) {
-          var status = { status: "on", dateTime: timeObject["date"] };
+          var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[1]["temp2"]) {
-          var status = { status: "off", dateTime: timeObject["date"] };
+          var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
-          var status = { status: "stay", dateTime: timeObject["date"] };
+          var status = { status: "STAY", dateTime: timeObject["date"] };
         }
       } //Time is between setpoint 3 and 1
       else if (
@@ -214,11 +214,11 @@ router.post("/get-status", (req, res, next) => {
         currentTime < rows[0]["time1"]
       ) {
         if (currentTemperature < rows[2]["temp1"]) {
-          var status = { status: "on", dateTime: timeObject["date"] };
+          var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
-          var status = { status: "off", dateTime: timeObject["date"] };
+          var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
-          var status = { status: "stay", dateTime: timeObject["date"] };
+          var status = { status: "STAY", dateTime: timeObject["date"] };
         }
       }
 
