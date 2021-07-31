@@ -219,7 +219,7 @@ router.post("/get-status", (req, res, next) => {
 
         } else if (currentTemperature > rows[0]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
-          var val = "YO";
+          var val = "OFF";
           updateTable(actionId, actionTable, actionCol, val);
         } else {
             var rows = getAction();
