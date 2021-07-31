@@ -264,13 +264,15 @@ router.post("/get-status", (req, res, next) => {
         currentTime > rows[2]["time1"] ||
         currentTime < rows[0]["time1"]
       ) {
-        if (currentTemperature < rows[2]["temp1"]) {
+
+        var status = {"status":currentTime, "dateTime":rows[2]["time1"]}
+        /* if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
           var status = { status: "Bay", dateTime: timeObject["date"] };
-        }
+        } */
       }
 
       const json = JSON.stringify(status);
