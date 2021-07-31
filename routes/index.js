@@ -10,7 +10,7 @@ function connectDb() {
     user: "migo",
     password: "migomigo",
     database: "iot_project",
-    connectionLimit: 99,
+    
   });
 
   return pool;
@@ -171,7 +171,11 @@ router.get("/time", (req, res, next) => {
 });
 
 router.post("/get-status", (req, res, next) => {
-  var setPoints = getSetPoints();
+    var currentTemperature = req.params.temp;
+    currentTemperature = parseFloat(currentTemperature);
+    const json = JSON.stringify({"status": currentTemperature, "dateTime": currentTemperature});
+  res.send(json);
+  /* var setPoints = getSetPoints();
 
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
@@ -231,7 +235,7 @@ router.post("/get-status", (req, res, next) => {
   }
 
   const json = JSON.stringify(status);
-  res.send(json);
+  res.send(json); */
 });
 
 module.exports = router;
