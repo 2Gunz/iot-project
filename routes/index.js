@@ -42,6 +42,7 @@ function getSetPoints() {
     var rows;
 
     connection.query(sql, (err, result) => {
+        connection.release();
       if (err) res.send("\r\n Failed\r\n");
 
       //rows = JSON.parse(JSON.stringify(result));
