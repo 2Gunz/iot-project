@@ -425,27 +425,11 @@ router.post("/", (req, res, next) => {
     temp5.trim();
     temp6.trim();
 
-    if (
-        time1.length > 5 ||
-        time2.length > 5 ||
-        time3.length > 5 ||
-        time1.length < 4 ||
-        time2.length < 4 ||
-        time3.length < 4
-    ) {
+    if (time1.length > 5 || time2.length > 5 || time3.length > 5 || time1.length < 4 || time2.length < 4 || time3.length < 4) {
         res.render("index", {
             message: "You entered bad time values. Time values must be at least 4 characters or a maximum of 5. Examples -- 4-char: 01:00, 5-char: 14:00",
         });
-    } else if (!temp1 ||
-        !temp2 ||
-        !temp3 ||
-        !temp4 ||
-        !temp5 ||
-        !temp6 ||
-        !time1 ||
-        !time2 ||
-        !time3
-    ) {
+    } else if (!temp1 || !temp2 || !temp3 || !temp4 || !temp5 || !temp6 || !time1 || !time2 || !time3) {
         res.render("index", {
             message: "You left fields blank. All fields are required, try again...",
         });
@@ -459,60 +443,34 @@ router.post("/", (req, res, next) => {
             parseInt(time1[0]) > 23
         ) myError = 1;
 
-        if (
-            time1[1].length > 2 ||
-            time1[1].length < 1 ||
-            isNaN(parseInt(time1[1])) ||
-            parseInt(time1[1]) > 59
-        ) myError = 1;
+        if (time1[1].length > 2 || time1[1].length < 1 || isNaN(parseInt(time1[1])) || parseInt(time1[1]) > 59)
+            myError = 1;
 
         time1 = time1[0] + time1[1] + "00";
 
         time2 = time2.split(":");
-        if (
-            time2[0].length > 2 ||
-            time2[0].length < 1 ||
-            isNaN(parseInt(time2[0])) ||
-            parseInt(time2[0]) > 23
-        ) myError = 1;
-        if (
-            time2[1].length > 2 ||
-            time2[1].length < 1 ||
-            isNaN(parseInt(time2[1])) ||
-            parseInt(time2[1]) > 59
-        ) myError = 1;
+        if (time2[0].length > 2 || time2[0].length < 1 || isNaN(parseInt(time2[0])) || parseInt(time2[0]) > 23)
+            myError = 1;
+
+        if (time2[1].length > 2 || time2[1].length < 1 || isNaN(parseInt(time2[1])) || parseInt(time2[1]) > 59)
+            myError = 1;
+
         time2 = time2[0] + time2[1] + "00";
 
         time3 = time3.split(":");
-        if (
-            time3[0].length > 2 ||
-            time3[0].length < 1 ||
-            isNaN(parseInt(time3[0])) ||
-            parseInt(time3[0]) > 23
-        ) myError = 1;
-        if (
-            time3[1].length > 2 ||
-            time3[1].length < 1 ||
-            isNaN(parseInt(time3[1])) ||
-            parseInt(time3[1]) > 59
-        ) myError = 1;
+        if (time3[0].length > 2 || time3[0].length < 1 || isNaN(parseInt(time3[0])) || parseInt(time3[0]) > 23)
+            myError = 1;
+
+        if (time3[1].length > 2 || time3[1].length < 1 || isNaN(parseInt(time3[1])) || parseInt(time3[1]) > 59)
+            myError = 1;
+
         time3 = time3[0] + time3[1] + "00";
 
         time1 = parseInt(time1);
         time2 = parseInt(time2);
         time3 = parseInt(time3);
 
-        if (
-            isNaN(time1) ||
-            isNaN(time2) ||
-            isNaN(time3) ||
-            isNaN(parseFloat(temp1)) ||
-            isNaN(parseFloat(temp2)) ||
-            isNaN(parseFloat(temp3)) ||
-            isNaN(parseFloat(temp4)) ||
-            isNaN(parseFloat(temp5)) ||
-            isNaN(parseFloat(temp6))
-        ) {
+        if (isNaN(time1) || isNaN(time2) || isNaN(time3) || isNaN(parseFloat(temp1)) || isNaN(parseFloat(temp2)) || isNaN(parseFloat(temp3)) || isNaN(parseFloat(temp4)) || isNaN(parseFloat(temp5)) || isNaN(parseFloat(temp6))) {
             res.render("index", {
                 message: "You're inputting junk values...You know this is free software right??? ;)",
             });
@@ -521,6 +479,7 @@ router.post("/", (req, res, next) => {
                 message: "Bad time values. Try again :[",
             });
         } else {
+
             if (parseFloat(temp1) < parseFloat(temp2))
                 var sp1 = { time: time1, temp1: temp1, temp2: temp2 };
             else var sp1 = { time: time1, temp1: temp2, temp2: temp1 };
@@ -554,7 +513,7 @@ router.post("/", (req, res, next) => {
 
                     connection.query(sql, (err, result) => {
                         connection.release();
-                        if (err) throw err;
+                        /* if (err) throw err; */
 
                         res.render("index", {
                             message: "Success! Your set points have been updated :)",
