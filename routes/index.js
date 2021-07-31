@@ -216,7 +216,12 @@ router.post("/get-status", (req, res, next) => {
       //Time is between setpoint 1 and 2
       if (currentTime > rows[0]["time1"] && currentTime < rows[1]["time1"]) {
         if (currentTemperature < rows[0]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[0]["temp1"],temp2: rows[0]["temp2"] };
+          var status = {
+            status: "ON",
+            dateTime: timeObject["date"],
+            temp1: rows[0]["temp1"],
+            temp2: rows[0]["temp2"],
+          };
           var val = "ON";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -227,7 +232,12 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[0]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"], temp1: rows[0]["temp1"],temp2: rows[0]["temp2"]};
+          var status = {
+            status: "OFF",
+            dateTime: timeObject["date"],
+            temp1: rows[0]["temp1"],
+            temp2: rows[0]["temp2"],
+          };
           var val = "OFF";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -249,16 +259,29 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"], temp1: rows[0]["temp1"],temp2: rows[0]["temp2"] };
+              var status = {
+                status: statVal,
+                dateTime: timeObject["date"],
+                temp1: rows[0]["temp1"],
+                temp2: rows[0]["temp2"],
+              };
               const json = JSON.stringify(status);
               res.send(json);
             });
           });
         }
       } //Time is between setpoint 2 and 3
-      else if (currentTime > rows[1]["time1"] && currentTime < rows[2]["time1"]) {
+      else if (
+        currentTime > rows[1]["time1"] &&
+        currentTime < rows[2]["time1"]
+      ) {
         if (currentTemperature < rows[1]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"] };
+          var status = {
+            status: "ON",
+            dateTime: timeObject["date"],
+            temp1: rows[1]["temp1"],
+            temp2: rows[1]["temp2"],
+          };
           var val = "ON";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -269,7 +292,12 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[1]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"]  };
+          var status = {
+            status: "OFF",
+            dateTime: timeObject["date"],
+            temp1: rows[1]["temp1"],
+            temp2: rows[1]["temp2"],
+          };
           var val = "OFF";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -291,18 +319,29 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"], temp1: rows[1]["temp1"],temp2: rows[1]["temp2"]  };
+              var status = {
+                status: statVal,
+                dateTime: timeObject["date"],
+                temp1: rows[1]["temp1"],
+                temp2: rows[1]["temp2"],
+              };
               const json = JSON.stringify(status);
               res.send(json);
             });
           });
         }
-
-   
       } //Time is between setpoint 3 and 1
-      else if (currentTime > rows[2]["time1"] || currentTime < rows[0]["time1"]) {
+      else if (
+        currentTime > rows[2]["time1"] ||
+        currentTime < rows[0]["time1"]
+      ) {
         if (currentTemperature < rows[2]["temp1"]) {
-          var status = { status: "ON", dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]  };
+          var status = {
+            status: "ON",
+            dateTime: timeObject["date"],
+            temp1: rows[2]["temp1"],
+            temp2: rows[2]["temp2"],
+          };
           var val = "ON";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -313,7 +352,12 @@ router.post("/get-status", (req, res, next) => {
           const json = JSON.stringify(status);
           res.send(json);
         } else if (currentTemperature > rows[2]["temp2"]) {
-          var status = { status: "OFF", dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]   };
+          var status = {
+            status: "OFF",
+            dateTime: timeObject["date"],
+            temp1: rows[2]["temp1"],
+            temp2: rows[2]["temp2"],
+          };
           var val = "OFF";
 
           updateTable(actionId, actionTable, actionCol, val);
@@ -335,7 +379,12 @@ router.post("/get-status", (req, res, next) => {
 
               var results = JSON.parse(JSON.stringify(result));
               var statVal = results[0]["status"];
-              var status = { status: statVal, dateTime: timeObject["date"], temp1: rows[2]["temp1"],temp2: rows[2]["temp2"]   };
+              var status = {
+                status: statVal,
+                dateTime: timeObject["date"],
+                temp1: rows[2]["temp1"],
+                temp2: rows[2]["temp2"],
+              };
               const json = JSON.stringify(status);
               res.send(json);
             });
@@ -344,117 +393,136 @@ router.post("/get-status", (req, res, next) => {
       }
     });
   });
-
 });
 
+router.get("/", (req, res, next) => {
+  res.render("index", {
+    message: "You must fill in ALL fields.  Use 24-hour time format. ",
+  });
+});
 
-router.get("/", (req,res,next) =>{
-    res.render('index', {message: "You must fill in ALL fields.  Use 24-hour time format. "});
-})
+router.post("/", (req, res, next) => {
+  var time1 = req.body.time1;
+  var time2 = req.body.time2;
+  var time3 = req.body.time3;
+  time1.trim();
+  time2.trim();
+  time3.trim();
 
-router.post("/", (req,res,next) =>{
-    var time1 = req.body.time1;
-    var time2 = req.body.time2;
-    var time3 = req.body.time3;
-    time1.trim();
-    time2.trim();
-    time3.trim();
+  var temp1 = req.body.temp1;
+  var temp2 = req.body.temp2;
 
-    var temp1 = req.body.temp1;
-    var temp2 = req.body.temp2;
+  var temp3 = req.body.temp3;
+  var temp4 = req.body.temp4;
 
-    var temp3 = req.body.temp3;
-    var temp4 = req.body.temp4;
+  var temp5 = req.body.temp5;
+  var temp6 = req.body.temp6;
 
-    var temp5 = req.body.temp5;
-    var temp6 = req.body.temp6;
+  temp1.trim();
+  temp2.trim();
+  temp3.trim();
+  temp4.trim();
+  temp5.trim();
+  temp6.trim();
 
-    temp1.trim();
-    temp2.trim();
-    temp3.trim();
-    temp4.trim();
-    temp5.trim();
-    temp6.trim();
+  if (
+    time1.length > 5 ||
+    time2.length > 5 ||
+    time3.length > 5 ||
+    time1.length < 4 ||
+    time2.length < 4 ||
+    time3.length < 4
+  ) {
+    res.render("index", {
+      message:
+        "You entered bad time values. Time values must be at least 4 characters or a maximum of 5. Examples -- 4-char: 01:00, 5-char: 14:00",
+    });
+  } else if (
+    !temp1 ||
+    !temp2 ||
+    !temp3 ||
+    !temp4 ||
+    !temp5 ||
+    !temp6 ||
+    !time1 ||
+    !time2 ||
+    !time3
+  ) {
+    res.render("index", {
+      message: "You left fields blank. All fields are required, try again...",
+    });
+  } else {
+    time1 = time1.split(":");
+    if (time1[0].length > 2) time1[0].substring(0, 2);
+    if (time1[1].length > 2) time1[1].substring(0, 2);
+    time1 = time1[0] + time1[1] + "00";
 
+    time2 = time2.split(":");
+    if (time2[0].length > 2) time2[0].substring(0, 2);
+    if (time2[1].length > 2) time2[1].substring(0, 2);
+    time2 = time2[0] + time2[1] + "00";
 
-    if(time1.length > 5 || time2.length > 5 || time3.length > 5 ||time1.length < 4 || time2.length < 4 || time3.length < 4)
-    {
-        res.render("index", {message: "You entered bad time values. Time values must be at least 4 characters or a maximum of 5. Examples -- 4-char: 01:00, 5-char: 14:00"})
+    time3 = time3.split(":");
+    if (time3[0].length > 2) time3[0].substring(0, 2);
+    if (time3[1].length > 2) time3[1].substring(0, 2);
+    time3 = time3[0] + time3[1] + "00";
+
+    time1 = parseInt(time1);
+    time2 = parseInt(time2);
+    time3 = parseInt(time3);
+
+    if (
+      isNaN(time1) ||
+      isNaN(time2) ||
+      isNaN(time3) ||
+      isNaN(parseFloat(temp1)) ||
+      isNaN(parseFloat(temp2)) ||
+      isNaN(parseFloat(temp3)) ||
+      isNaN(parseFloat(temp4)) ||
+      isNaN(parseFloat(temp5)) ||
+      isNaN(parseFloat(temp6))
+    ) {
+      res.render("index", {
+        message:
+          "You're inputting junk values...You know this is free software right???",
+      });
+    } else {
+      var sp1 = { time: time1, temp1: temp1, temp2: temp2 };
+      var sp2 = { time: time2, temp1: temp3, temp2: temp4 };
+      var sp3 = { time: time3, temp1: temp5, temp2: temp6 };
+
+      var spArr = [sp1, sp2, sp3];
+
+      spArr.sort((a, b) => (a.time < b.time ? 1 : -1));
+
+      var spCount = 1;
+      spArr.map((object, index) => {
+        pool.getConnection((err, connection) => {
+          if (err) throw err;
+
+          const sql =
+            "UPDATE set_points SET time1 = " +
+            object["time"] +
+            ", temp1 = " +
+            object["temp1"] +
+            ", temp2 = " +
+            object["temp2"] +
+            " WHERE id = " +
+            spCount;
+
+          connection.query(sql, (err, result) => {
+            connection.release();
+            if (err) throw err;
+
+            res.render("index", {
+              message: "Success! Your set points have been updated :)",
+            });
+          });
+          spCount++;
+        });
+      });
     }
-    else if(!temp1 ||!temp2||!temp3||!temp4||!temp5||!temp6||!time1||!time2||!time3)
-    {
-        res.render("index", {message: "You left fields blank. All fields are required, try again..."})
-    }
-    else
-    {
-        time1 = time1.split(":");
-        if(time1[0].length > 2)
-            time1[0].substring(0,2);
-        if(time1[1].length > 2)
-            time1[1].substring(0,2);
-        time1 = time1[0] + time1[1] + "00";
-    
-        time2 = time2.split(":");
-        if(time2[0].length > 2)
-            time2[0].substring(0,2);
-        if(time2[1].length > 2)
-            time2[1].substring(0,2);
-        time2 = time2[0] + time2[1] + "00";
-    
-        time3 = time3.split(":");
-        if(time3[0].length > 2)
-            time3[0].substring(0,2);
-        if(time3[1].length > 2)
-            time3[1].substring(0,2);
-        time3 = time3[0] + time3[1] + "00";
-    
-        time1 = parseInt(time1);
-        time2 = parseInt(time2);
-        time3 = parseInt(time3);
-
-        if(isNaN(time1) || isNaN(time2) || isNaN(time3) || isNaN(parseFloat(temp1)) || isNaN(parseFloat(temp2)) || isNaN(parseFloat(temp3))
-        || isNaN(parseFloat(temp4)) || isNaN(parseFloat(temp5)) || isNaN(parseFloat(temp6)))
-        {
-            res.render("index", {message: "You're inputting junk values...You know this is free software right???"})
-        }
-        else{
-            var sp1 = {"time": time1, "temp1": temp1, "temp2":temp2};
-            var sp2 = {"time": time2, "temp1": temp3, "temp2":temp4};
-            var sp3 = {"time": time3, "temp1": temp5, "temp2":temp6};
-        
-            var spArr = [sp1, sp2, sp3];
-        
-            spArr.sort((a,b) => (a.time < b.time) ? 1 : -1);
-        
-           var spCount = 1;
-           spArr.map((object, index) => {
-               
-            pool.getConnection((err, connection) => {
-                if (err) throw err;
-            
-                const sql = "UPDATE set_points SET time1 = " + object["time"] + ", temp1 = " + object["temp1"] + ", temp2 = " + object["temp2"] + " WHERE id = " + spCount;
-                    
-                connection.query(sql, (err, result) => {
-                  connection.release();
-                  if (err) throw err;
-                    
-                  res.render("index", {message: "Success! Your set points have been updated :)"});
-                });
-                spCount++;
-              });
-           })
-        
-        
-        }
-        }
-    
-        
-    
-        
-
-    
-
-
-})
+  }
+});
 
 module.exports = router;
