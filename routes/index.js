@@ -21,7 +21,7 @@ function updateTable(id, table, column, val) {
       "UPDATE " + table + " SET " + column + " = " + val + " WHERE id = " + id;
     connection.query(sql, (err, result) => {
       connection.release();
-      if (err) res.send("\r\n Failed\r\n");
+      if (err) throw err;
 
       res.send("Data updated :)");
     });
