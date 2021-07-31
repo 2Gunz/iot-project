@@ -170,7 +170,7 @@ router.get("/time", (req, res, next) => {
 
 router.get("/get-status/:temp", (req, res, next) => {
     var currentTemperature = req.params.temp;
-    const json = JSON.stringify(currentTemperature);
+    const json = JSON.stringify({"status":currentTemperature, "dateTime": 0});
   res.send(json);
   /* var setPoints = getSetPoints();
 
