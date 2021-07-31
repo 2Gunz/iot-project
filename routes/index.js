@@ -517,10 +517,11 @@ router.post("/", (req, res, next) => {
                         connection.release();
                         if (err) throw err;
                     });
-                    message = "Success! Your set points have been updated :)";
+
                     spCount++;
                 });
             });
+            message = "Success! Your set points have been updated :)";
         }
     }
     res.render("index", {
