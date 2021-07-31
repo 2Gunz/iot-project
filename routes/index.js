@@ -225,6 +225,8 @@ router.post("/get-status", (req, res, next) => {
           var val = "ON";
           updateTable(actionId, actionTable, actionCol, val);
 
+          const json = JSON.stringify(status);
+      res.send(json);
 
         } else if (currentTemperature > rows[0]["temp2"]) {
 
@@ -233,6 +235,8 @@ router.post("/get-status", (req, res, next) => {
           var val = "OFF";
           updateTable(actionId, actionTable, actionCol, val);
 
+          const json = JSON.stringify(status);
+          res.send(json);
 
         } else {
           var results;
@@ -264,6 +268,7 @@ router.post("/get-status", (req, res, next) => {
       ) {
         if (currentTemperature < rows[1]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
+          
         } else if (currentTemperature > rows[1]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
         } else {
@@ -285,8 +290,7 @@ router.post("/get-status", (req, res, next) => {
         } */
       }
 
-      const json = JSON.stringify(status);
-      res.send(json);
+      
     });
   });
 
