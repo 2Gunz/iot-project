@@ -398,7 +398,7 @@ router.post("/", (req,res,next) =>{
         connection.query(sql, (err, result) => {
           connection.release();
           if (err) throw err;
-            window.alert('Success! Set points updated');
+            
           res.render("index");
         });
         spCount++;
