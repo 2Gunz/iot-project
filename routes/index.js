@@ -377,7 +377,7 @@ router.post("/", (req,res,next) =>{
     temp6.trim();
 
 
-    if(time1.length > 5 || time2.length > 5 || time3.length > 5 ||time1.length < 4 || time2.length > 4 || time3.length > 4)
+    if(time1.length > 5 || time2.length > 5 || time3.length > 5 ||time1.length < 4 || time2.length < 4 || time3.length < 4)
     {
         res.render("index", {message: "You entered bad time values. Time values must be at least 4 characters or a maximum of 5. Examples -- 4-char: 01:00, 5-char: 14:00"})
     }
