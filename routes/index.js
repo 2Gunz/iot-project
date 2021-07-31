@@ -513,10 +513,11 @@ router.post("/", (req, res, next) => {
                         spCount;
 
                     connection.query(sql, (err, result) => {
-                        message = "Success! Your set points have been updated :)";
+
                         connection.release();
                         if (err) throw err;
                     });
+                    message = "Success! Your set points have been updated :)";
                     spCount++;
                 });
             });
