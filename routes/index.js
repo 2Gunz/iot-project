@@ -194,10 +194,20 @@ router.post("/get-status", (req, res, next) => {
       rows = JSON.parse(JSON.stringify(result));
 
       var timeObject = getTime();
-      var currentTime =
-        timeObject["hours"].toString() +
-        timeObject["minutes"].toString() +
-        timeObject["seconds"].toString();
+      
+      var strHrs = timeObject["hours"].toString();
+      if(strHrs.length == 1)
+        strHrs = "0" + strHrs;
+
+      var strMin = timeObject["minutes"].toString();
+      if(strMin.length == 1)
+          strMin = "0" + strMin;
+
+      var strSec = timeObject["seconds"].toString();
+      if(strSec.length == 1)
+        strSec = "0" + strSec;
+
+      var currentTime = strHrs + strMin + strSec;
       currentTime = parseInt(currentTime);
 
       var currentTemperature = req.body.temp;
@@ -266,7 +276,7 @@ router.post("/get-status", (req, res, next) => {
       ) {
 
         var status = {"status":currentTime, "dateTime":rows[2]["time1"]}
-        /* if (currentTemperature < rows[2]["temp1"]) {
+       /*  if (currentTemperature < rows[2]["temp1"]) {
           var status = { status: "ON", dateTime: timeObject["date"] };
         } else if (currentTemperature > rows[2]["temp2"]) {
           var status = { status: "OFF", dateTime: timeObject["date"] };
