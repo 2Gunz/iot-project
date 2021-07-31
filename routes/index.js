@@ -174,12 +174,9 @@ router.post("/get-status", (req, res, next) => {
   //Times should already be sorted on the way into db
   //So now just compare time from POST to times in db
   var timeObject = getTime();
-  var currentTime =
-    timeObject["hours"] +
-    "" +
-    timeObject["minutes"] +
-    "" +
-    timeObject["seconds"];
+  var currentTime = timeObject["hours"].toString() + timeObject["minutes"].toString() + timeObject["seconds"].toString();
+  currentTime = parseInt(currentTime);
+
 
   
   var currentTemperature = req.body.temp;
