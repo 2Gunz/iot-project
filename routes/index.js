@@ -456,7 +456,7 @@ router.post("/", (req, res, next) => {
             time1[0].length > 2 ||
             time1[0].length < 1 ||
             isNaN(parseInt(time1[0])) ||
-            parseInt(time1[0]) > 24
+            parseInt(time1[0]) > 23
         ) myError = 1;
 
         if (
@@ -473,7 +473,7 @@ router.post("/", (req, res, next) => {
             time2[0].length > 2 ||
             time2[0].length < 1 ||
             isNaN(parseInt(time2[0])) ||
-            parseInt(time2[0]) > 24
+            parseInt(time2[0]) > 23
         ) myError = 1;
         if (
             time2[1].length > 2 ||
@@ -488,7 +488,7 @@ router.post("/", (req, res, next) => {
             time3[0].length > 2 ||
             time3[0].length < 1 ||
             isNaN(parseInt(time3[0])) ||
-            parseInt(time3[0]) > 24
+            parseInt(time3[0]) > 23
         ) myError = 1;
         if (
             time3[1].length > 2 ||
