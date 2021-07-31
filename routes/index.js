@@ -191,19 +191,20 @@ router.post("/get-status", (req, res, next) => {
           if (err) throw err;
     
           rows = JSON.parse(JSON.stringify(result));
-          
-        });
-      });
-
-  //Times should already be sorted on the way into db
-  //So now just compare time from POST to times in db
-  var timeObject = getTime();
+          var timeObject = getTime();
   var currentTime = timeObject["hours"].toString() + timeObject["minutes"].toString() + timeObject["seconds"].toString();
   currentTime = parseInt(currentTime);
 
 
   const j = JSON.stringify({"status":currentTime, "dateTime": rows[0]["time1"]});
   res.send(j);
+          
+        });
+      });
+
+  //Times should already be sorted on the way into db
+  //So now just compare time from POST to times in db
+  
   
   /* var currentTemperature = req.body.temp;
 
