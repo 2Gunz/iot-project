@@ -417,16 +417,7 @@ router.post("/get-status", (req, res, next) => {
             }
         });
     });
-    if (!json) {
-        var status = {
-            status: "ON",
-            dateTime: timeObject["date"],
-            temp1: "",
-            temp2: "",
-        };
-        const json = JSON.stringify(status);
-        res.send(json);
-    }
+
 
 });
 
