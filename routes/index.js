@@ -238,7 +238,7 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "ON";
 
-                    insertCurrentTemp(currentTime, currentTemperature, val);
+                    //insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
@@ -256,7 +256,7 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "OFF";
 
-                    insertCurrentTemp(currentTime, currentTemperature, val);
+                    //insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
@@ -302,7 +302,7 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "ON";
 
-                    insertCurrentTemp(currentTime, currentTemperature, val);
+                    //insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
@@ -320,7 +320,7 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "OFF";
 
-                    insertCurrentTemp(currentTime, currentTemperature, val);
+                    //insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
@@ -366,7 +366,7 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "ON";
 
-                    insertCurrentTemp(currentTime, currentTemperature, val);
+                    //                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
@@ -384,7 +384,7 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "OFF";
 
-                    insertCurrentTemp(currentTime, currentTemperature, val);
+                    //insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
