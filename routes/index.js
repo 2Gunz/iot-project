@@ -581,4 +581,37 @@ router.post("/", (req, res, next) => {
     });
 });
 
+
+router.get("/stats", (req, res, next) => {
+
+
+    res.render("stats", {});
+    /* pool.getConnection((err, connection) => {
+        if (err) throw err;
+
+        var sql = "SELECT * FROM action";
+
+        connection.query(sql, (err, result) => {
+
+            connection.release();
+            if (err) throw err;
+
+            row = JSON.parse(JSON.stringify(result));
+
+
+
+            res.render("index", {
+                mes: "You must fill in ALL fields.  Use 24-hour time format. ",
+
+            });
+
+        })
+
+
+
+    })
+ */
+
+})
+
 module.exports = router;
