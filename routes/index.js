@@ -585,7 +585,7 @@ router.post("/", (req, res, next) => {
 router.get("/stats", (req, res, next) => {
 
 
-    res.render("stats", {});
+    res.render("stats");
     /* pool.getConnection((err, connection) => {
         if (err) throw err;
 
