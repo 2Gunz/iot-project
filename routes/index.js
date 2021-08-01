@@ -196,6 +196,7 @@ function insertCurrentTemp(currentTime, currentTemp, val) {
 
 router.post("/get-status", (req, res, next) => {
     var rows;
+    var currentTemperature = req.body.temp;
     pool.getConnection((err, connection) => {
         if (err) throw err;
 
@@ -221,7 +222,7 @@ router.post("/get-status", (req, res, next) => {
             var currentTime = strHrs + strMin + strSec;
             currentTime = parseInt(currentTime);
 
-            var currentTemperature = req.body.temp;
+
 
             currentTemperature = parseFloat(currentTemperature);
             var actionId = 1;
@@ -289,10 +290,7 @@ router.post("/get-status", (req, res, next) => {
                     });
                 }
             } //Time is between setpoint 2 and 3
-            else if (
-                currentTime > rows[1]["time1"] &&
-                currentTime < rows[2]["time1"]
-            ) {
+            else if (currentTime > rows[1]["time1"] && currentTime < rows[2]["time1"]) {
                 if (currentTemperature < rows[1]["temp1"]) {
                     var status = {
                         status: "ON",
@@ -419,6 +417,17 @@ router.post("/get-status", (req, res, next) => {
             }
         });
     });
+    if (!json) {
+        var status = {
+            status: "ON",
+            dateTime: timeObject["date"],
+            temp1: "",
+            temp2: "",
+        };
+        const json = JSON.stringify(status);
+        res.send(json);
+    }
+
 });
 
 router.get("/", (req, res, next) => {
@@ -439,10 +448,9 @@ router.get("/", (req, res, next) => {
 
 
 
-            var myStatus = row[0]["status"];
             res.render("index", {
                 mes: "You must fill in ALL fields.  Use 24-hour time format. ",
-                status: myStatus,
+
             });
 
         })
