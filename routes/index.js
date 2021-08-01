@@ -185,7 +185,7 @@ function insertCurrentTemp(currentTime, currentTemp, val) {
     pool.getConnection((err, connection) => {
         if (err) throw err;
 
-        const sql = "INSERT INTO current_temp (temp, status, time) VALUES(" + currentTemp + "," + val + "," + currentTime + ")";
+        const sql = "INSERT INTO current_temp (temp, status, time) VALUES(" + currentTemp + ",'" + val + "','" + currentTime + "')";
 
         connection.query(sql, (err, result) => {
             connection.release();
