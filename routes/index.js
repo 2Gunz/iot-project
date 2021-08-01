@@ -595,15 +595,18 @@ router.post("persist-status", (req, res, next) => {
         var sql = "SELECT * FROM current_temp";
 
         connection.query(sql, (err, result) => {
-            //connection.release();
+            connection.release();
             if (err) throw err;
 
             var rows = JSON.parse(JSON.stringify(result[result.length - 1]));
             if (rows[0]["status"] != status) {
-                sql = "INSERT INTO current_temp(temp,status,time) VALUES(" + temp + "," + status + "," + time + ")";
-                connection.query(sql, (err, result) => {
-                    connection.release();
-                    if (err) throw err;
+                pool.getConnection((err, connection) => {
+                    sql = "INSERT INTO current_temp(temp,status,time) VALUES(" + temp + "," + status + "," + time + ")";
+                    connection.query(sql, (err, result) => {
+                        connection.release();
+                        if (err) throw err;
+                        res.send("good");
+                    })
                 })
             }
 
