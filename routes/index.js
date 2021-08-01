@@ -180,6 +180,20 @@ function updateTable(id, table, column, val) {
     });
 }
 
+function insertCurrentTemp(currentTime, currentTemp, val) {
+
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+
+        const sql = "INSERT INTO current_temp (temp, status, time) VALUES(" + currentTemp + "," + val + "," + currentTime + ")";
+
+        connection.query(sql, (err, result) => {
+            connection.release();
+            if (err) throw err;
+        })
+    })
+}
+
 router.post("/get-status", (req, res, next) => {
     var rows;
     pool.getConnection((err, connection) => {
@@ -228,6 +242,7 @@ router.post("/get-status", (req, res, next) => {
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
+                    insertCurrentTemp(currentTime, currentTemp, val);
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -244,6 +259,7 @@ router.post("/get-status", (req, res, next) => {
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
+                    insertCurrentTemp(currentTime, currentTemp, val);
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -288,6 +304,7 @@ router.post("/get-status", (req, res, next) => {
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
+                    insertCurrentTemp(currentTime, currentTemp, val);
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -304,6 +321,7 @@ router.post("/get-status", (req, res, next) => {
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
+                    insertCurrentTemp(currentTime, currentTemp, val);
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -348,6 +366,7 @@ router.post("/get-status", (req, res, next) => {
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
+                    insertCurrentTemp(currentTime, currentTemp, val);
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -364,6 +383,7 @@ router.post("/get-status", (req, res, next) => {
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
+                    insertCurrentTemp(currentTime, currentTemp, val);
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -396,10 +416,37 @@ router.post("/get-status", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-    res.render("index", {
-        mes: "You must fill in ALL fields.  Use 24-hour time format. ",
-    });
-});
+
+
+
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+
+        var sql = "SELECT * FROM action";
+
+        connection.query(sql, (err, result) => {
+
+            connection.release();
+            if (err) throw err;
+
+            row = JSON.parse(JSON.stringify(result));
+
+
+
+            var myStatus = row[0]["status"];
+            res.render("index", {
+                mes: "You must fill in ALL fields.  Use 24-hour time format. ",
+                status: myStatus,
+            });
+
+        })
+
+
+
+    })
+
+
+})
 
 router.post("/", (req, res, next) => {
     var message;
