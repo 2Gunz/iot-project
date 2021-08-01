@@ -72,9 +72,9 @@ router.post("/set-points", (req, res, next) => {
 
 //Get table: action
 router.get("/action", (req, res, next) => {
-    var conn = connectDb();
 
-    conn.getConnection((err, connection) => {
+
+    pool.getConnection((err, connection) => {
         if (err) throw err;
 
         const sql = "SELECT * FROM action";
@@ -582,26 +582,89 @@ router.post("/", (req, res, next) => {
 });
 
 
+router.post("persist-status", (req, res, next) => {
+
+    var temp = req.body.temp;
+    var status = req.body.status;
+    var timeObject = getTime();
+    var time = timeObject["date"];
+
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+
+        var sql = "SELECT * FROM current_temp";
+
+        connection.query(sql, (err, result) => {
+            //connection.release();
+            if (err) throw err;
+
+            var rows = JSON.parse(JSON.stringify(result[result.length - 1]));
+            if (rows[0]["status"] != status) {
+                sql = "INSERT INTO current_temp(temp,status,time) VALUES(" + temp + "," + status + "," + time + ")";
+                connection.query(sql, (err, result) => {
+                    connection.release();
+                    if (err) throw err;
+                })
+            }
+
+        });
+    });
+
+
+})
+
+
 router.get("/stats", (req, res, next) => {
 
 
-    res.render("stats");
-    /* pool.getConnection((err, connection) => {
+
+    pool.getConnection((err, connection) => {
         if (err) throw err;
 
-        var sql = "SELECT * FROM action";
+        var sql = "SELECT * FROM current_temp";
 
         connection.query(sql, (err, result) => {
 
-            connection.release();
+            //connection.release();
             if (err) throw err;
 
-            row = JSON.parse(JSON.stringify(result));
+
+
+            var rows = JSON.parse(JSON.stringify(result[result.length - 1]));
+
+
+            connection.query(sql, (err, result) => {
+                //connection.release();
+                if (err) throw err;
 
 
 
-            res.render("index", {
-                mes: "You must fill in ALL fields.  Use 24-hour time format. ",
+                sql = "SELECT * FROM set_points";
+                connection.query(sql, (err, result) => {
+                    connection.release();
+                    if (err) throw err;
+                    var results = JSON.parse(JSON.stringify(result));
+
+                    var status = rows[0]['status'];
+                    var currentTemp = rows[0]['temp'];
+
+                    var time1 = results[0]["time1"];
+                    var time2 = results[1]["time2"];
+                    var time3 = results[2]["time3"];
+
+                    var temp1 = results[0]['temp1']
+                    var temp2 = results[0]['temp2']
+                    var temp3 = results[1]['temp1']
+                    var temp4 = results[1]['temp2']
+                    var temp5 = results[2]['temp1']
+                    var temp6 = results[2]['temp2']
+
+                    res.render("stats", { heaterStatus: status, currentTemp: currentTemp, time1: time1, time2: time2, time3: time3, lowTemp1: temp1, hiTemp1: temp2, lowTemp2: temp3, hiTemp2: temp4, lowTemp3: temp5, hiTemp3: temp6 });
+
+
+
+                })
+
 
             });
 
@@ -610,7 +673,7 @@ router.get("/stats", (req, res, next) => {
 
 
     })
- */
+
 
 })
 
