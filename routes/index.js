@@ -601,6 +601,7 @@ router.post("persist-status", (req, res, next) => {
             var rows = JSON.parse(JSON.stringify(result[result.length - 1]));
             if (rows[0]["status"] != status) {
                 pool.getConnection((err, connection) => {
+                    if (err) throw err;
                     sql = "INSERT INTO current_temp(temp,status,time) VALUES(" + temp + "," + status + "," + time + ")";
                     connection.query(sql, (err, result) => {
                         connection.release();
@@ -620,8 +621,8 @@ router.post("persist-status", (req, res, next) => {
 router.get("/stats", (req, res, next) => {
 
 
-
-    pool.getConnection((err, connection) => {
+    res.render("stats");
+    /* pool.getConnection((err, connection) => {
         if (err) throw err;
 
         var sql = "SELECT * FROM current_temp";
@@ -675,7 +676,7 @@ router.get("/stats", (req, res, next) => {
 
 
 
-    })
+    }) */
 
 
 })
