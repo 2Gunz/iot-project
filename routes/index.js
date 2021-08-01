@@ -238,11 +238,12 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "ON";
 
+                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
-                    insertCurrentTemp(currentTime, currentTemp, val);
+
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -255,11 +256,12 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "OFF";
 
+                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
-                    insertCurrentTemp(currentTime, currentTemp, val);
+
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -300,11 +302,12 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "ON";
 
+                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
-                    insertCurrentTemp(currentTime, currentTemp, val);
+
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -317,11 +320,12 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "OFF";
 
+                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
-                    insertCurrentTemp(currentTime, currentTemp, val);
+
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -362,11 +366,12 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "ON";
 
+                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
-                    insertCurrentTemp(currentTime, currentTemp, val);
+
 
                     const json = JSON.stringify(status);
                     res.send(json);
@@ -379,11 +384,12 @@ router.post("/get-status", (req, res, next) => {
                     };
                     var val = "OFF";
 
+                    insertCurrentTemp(currentTime, currentTemperature, val);
                     updateTable(actionId, actionTable, actionCol, val);
                     actionCol = "time";
                     val = currentTime;
                     updateTable(actionId, actionTable, actionCol, val);
-                    insertCurrentTemp(currentTime, currentTemp, val);
+
 
                     const json = JSON.stringify(status);
                     res.send(json);
